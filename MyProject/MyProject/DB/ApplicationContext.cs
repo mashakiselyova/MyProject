@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MyProject.Models;
 
-namespace NewsApp.Models
+namespace MyProject.DB
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            : base(options)
+        public DbSet<Vocabulary> Vocabularies { get; set; }
+        public DbSet<WordEntry> Words { get; set; }
+        public DbSet<Translation> Translations { get; set; }
+
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -20,8 +23,8 @@ namespace NewsApp.Models
             {
                 Id = "0",
                 Name = "admin",
-                NormalizedName="ADMIN"
+                NormalizedName = "ADMIN"
             });
-        }        
+        }
     }
 }

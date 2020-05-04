@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NewsApp.Models;
+using MyProject.DB;
+using MyProject.Models;
 
 namespace MyProject
 {
@@ -26,6 +27,8 @@ namespace MyProject
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>();
+
+            services.AddTransient<VocabularyService>();
 
             services.AddControllersWithViews();
         }

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MyProject.Models.Vocabulary>
+
+@if (Model == null)
+{
+    <div>
+        Словарей нет
+    </div>
+}
+else
+{
+    <div>
+        <ul>
+            @foreach (var vocabulary in Model)
+            {
+                <li>@vocabulary.Name</li>
+            }
+        </ul>
+    </div>
+}

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NewsApp.Models;
-using NewsApp.ViewModels;
+using MyProject.Models;
+using MyProject.ViewModels;
 using System.Threading.Tasks;
 
-namespace NewsApp.Controllers
+namespace MyProject.Controllers
 {
     public class AccountController : Controller
     {
