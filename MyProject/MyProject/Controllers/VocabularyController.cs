@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MyProject.Models;
 using MyProject.DB;
+using System.Collections.Generic;
 
 namespace MyProject.Controllers
 {
@@ -20,11 +21,9 @@ namespace MyProject.Controllers
             _vocabularyService = vocabularyService;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            user.Vocabularies = _vocabularyService.GetVocabulariesByUserId(user.Id);
-            return View(user.Vocabularies);
+            return View(_vocabularyService.GetAllVocabularies());
         }
 
         [HttpGet]
@@ -36,9 +35,11 @@ namespace MyProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            Vocabulary vocabulary = new Vocabulary { Name = name, UserId = user.Id };
+            //Vocabulary vocabulary = new Vocabulary { Name = name, UserId = user.Id };
+            //await _vocabularyService.AddVocabularyAsync(vocabulary);
+            Vocabulary vocabulary = new Vocabulary { Name = name };
             await _vocabularyService.AddVocabularyAsync(vocabulary);
             return RedirectToAction("Index");
         }

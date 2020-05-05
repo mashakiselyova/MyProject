@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyProject.Models
 {
-    public class WordEntry
+    public class Word
     {
         public int Id { get; set; }
-        public string Word { get; set; }
+        public string Original { get; set; }
         public List<Translation> Translations { get; set; }
-        public byte[] Picture { get; set; }
-        public TimeSpan TimeUntillRevision { get; set; }
+        public int VocabularyId { get; set; }
     }
 }

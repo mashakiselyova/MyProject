@@ -22,9 +22,9 @@ namespace MyProject.DB
             await _context.SaveChangesAsync();
         }
 
-        public List<Vocabulary> GetVocabulariesByUserId(string id)
+        public List<Vocabulary> GetAllVocabularies()
         {
-            return _context.Vocabularies.Where(v => v.UserId == id).ToList();
+            return _context.Vocabularies.ToList();
         }
     }
 }

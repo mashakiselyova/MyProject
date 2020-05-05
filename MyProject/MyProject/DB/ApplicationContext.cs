@@ -8,7 +8,9 @@ namespace MyProject.DB
     public class ApplicationContext : IdentityDbContext<User>
     {
         public DbSet<Vocabulary> Vocabularies { get; set; }
-        public DbSet<WordEntry> Words { get; set; }
+        public DbSet<Collection> Collections { get; set; }
+        public DbSet<Word> Words { get; set; }
+        public DbSet<RevisionWord> RevisionWords { get; set; }
         public DbSet<Translation> Translations { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)

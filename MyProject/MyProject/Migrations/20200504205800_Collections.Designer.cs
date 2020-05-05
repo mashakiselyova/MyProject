@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyProject.DB;
 
 namespace MyProject.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200504205800_Collections")]
+    partial class Collections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace MyProject.Migrations
                         new
                         {
                             Id = "0",
-                            ConcurrencyStamp = "7b497d5c-d9df-4c11-9993-9f290a311b9c",
+                            ConcurrencyStamp = "1326b54f-fb3b-4e70-9bf7-bc6146df13e4",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -159,51 +161,6 @@ namespace MyProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyProject.Models.Collection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Collections");
-                });
-
-            modelBuilder.Entity("MyProject.Models.RevisionWord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("TimeUntillRevision")
-                        .HasColumnType("time");
-
-                    b.Property<int?>("WordId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CollectionId");
-
-                    b.HasIndex("WordId");
-
-                    b.ToTable("RevisionWords");
-                });
-
             modelBuilder.Entity("MyProject.Models.Translation", b =>
                 {
                     b.Property<int>("Id")
@@ -214,12 +171,12 @@ namespace MyProject.Migrations
                     b.Property<string>("Word")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WordId")
+                    b.Property<int?>("WordEntryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WordId");
+                    b.HasIndex("WordEntryId");
 
                     b.ToTable("Translations");
                 });
@@ -299,32 +256,59 @@ namespace MyProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Vocabularies");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Vocabulary");
                 });
 
-            modelBuilder.Entity("MyProject.Models.Word", b =>
+            modelBuilder.Entity("MyProject.Models.WordEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Original")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CollectionId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("Picture")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<TimeSpan>("TimeUntillRevision")
+                        .HasColumnType("time");
 
                     b.Property<int>("VocabularyId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Word")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("VocabularyId");
 
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("MyProject.Models.Collection", b =>
+                {
+                    b.HasBaseType("MyProject.Models.Vocabulary");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("Collection");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -378,40 +362,27 @@ namespace MyProject.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyProject.Models.Collection", b =>
-                {
-                    b.HasOne("MyProject.Models.User", null)
-                        .WithMany("Collections")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MyProject.Models.RevisionWord", b =>
-                {
-                    b.HasOne("MyProject.Models.Collection", null)
-                        .WithMany("RevisionWords")
-                        .HasForeignKey("CollectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyProject.Models.Word", "Word")
-                        .WithMany()
-                        .HasForeignKey("WordId");
-                });
-
             modelBuilder.Entity("MyProject.Models.Translation", b =>
                 {
-                    b.HasOne("MyProject.Models.Word", null)
+                    b.HasOne("MyProject.Models.WordEntry", null)
                         .WithMany("Translations")
-                        .HasForeignKey("WordId");
+                        .HasForeignKey("WordEntryId");
                 });
 
-            modelBuilder.Entity("MyProject.Models.Word", b =>
+            modelBuilder.Entity("MyProject.Models.WordEntry", b =>
                 {
                     b.HasOne("MyProject.Models.Vocabulary", null)
                         .WithMany("Words")
                         .HasForeignKey("VocabularyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MyProject.Models.Collection", b =>
+                {
+                    b.HasOne("MyProject.Models.User", null)
+                        .WithMany("Collections")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
