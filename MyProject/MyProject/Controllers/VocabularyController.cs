@@ -1,23 +1,16 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using MyProject.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyProject.DB;
-using System.Collections.Generic;
+using MyProject.Models;
+using System.Threading.Tasks;
 
 namespace MyProject.Controllers
 {
-    [Authorize]
     public class VocabularyController : Controller
     {
-
-        private UserManager<User> _userManager;
         private VocabularyService _vocabularyService;
 
-        public VocabularyController(UserManager<User> userManager, VocabularyService vocabularyService)
+        public VocabularyController(VocabularyService vocabularyService)
         {
-            _userManager = userManager;
             _vocabularyService = vocabularyService;
         }
 
@@ -35,13 +28,15 @@ namespace MyProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
-            //var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Vocabulary vocabulary = new Vocabulary { Name = name, UserId = user.Id };
-            //await _vocabularyService.AddVocabularyAsync(vocabulary);
             Vocabulary vocabulary = new Vocabulary { Name = name };
             await _vocabularyService.AddVocabularyAsync(vocabulary);
             return RedirectToAction("Index");
         }
+
+        public IActionResult ShowVocabulary(int id)
+        {
+            return View(_vocabularyService.GetVocabulary(id));
+        }
+
     }
 }

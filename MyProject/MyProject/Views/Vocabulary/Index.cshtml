@@ -12,7 +12,7 @@ else
         <ul>
             @foreach (var vocabulary in Model)
             {
-                <li>@vocabulary.Name</li>
+                <li><a asp-action="ShowVocabulary" asp-route-id="@vocabulary.Id">@vocabulary.Name</a></li>
             }
         </ul>
     </div>

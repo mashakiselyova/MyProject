@@ -26,5 +26,10 @@ namespace MyProject.DB
         {
             return _context.Vocabularies.ToList();
         }
+
+        public Vocabulary GetVocabulary(int id)
+        {
+            return _context.Vocabularies.Find(id);
+        }
     }
 }
