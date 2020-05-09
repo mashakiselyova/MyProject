@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyProject.Models;
 using MyProject.ViewModels;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MyProject.Controllers
@@ -59,6 +60,16 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.UserName.Contains('@'))
+                {
+                    var user = await _userManager.FindByEmailAsync(model.UserName);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "User not found");
+                        return View(model);
+                    }
+                    model.UserName = user.UserName;
+                }
                 var result =
                     await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
