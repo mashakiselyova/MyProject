@@ -5,12 +5,13 @@ namespace MyProject.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Имя")]
+        [Display(Name = "Логин")]
+        //[RegularExpression(@"[A-Za-z0-9._+-]", ErrorMessage = "Логин содержит недопустимые символы")]
         public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Email")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
+        [EmailAddress(ErrorMessage = "Некорректный адрес")]
         public string Email { get; set; }
 
         [Required]
