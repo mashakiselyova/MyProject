@@ -6,7 +6,6 @@ namespace MyProject.ViewModels
     {
         [Required]
         [Display(Name = "Логин")]
-        //[RegularExpression(@"[A-Za-z0-9._+-]", ErrorMessage = "Логин содержит недопустимые символы")]
         public string UserName { get; set; }
 
         [Required]

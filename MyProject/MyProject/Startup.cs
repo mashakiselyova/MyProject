@@ -32,6 +32,7 @@ namespace MyProject
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-+";
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
 
