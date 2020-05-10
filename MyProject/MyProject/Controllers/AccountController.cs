@@ -98,10 +98,10 @@ namespace MyProject.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> UserInfo(string name)
+        public async Task<IActionResult> UserInfo(string id)
         {
-            User user = await _userManager.FindByNameAsync(name);
-            UserViewModel model = new UserViewModel { UserName = user.UserName, Email = user.Email };
+            User user = await _userManager.FindByIdAsync(id);
+            UserViewModel model = new UserViewModel { Id = user.Id, UserName = user.UserName, Email = user.Email };
             return View(model);
         }
     }

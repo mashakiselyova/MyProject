@@ -69,7 +69,7 @@ namespace MyProject.Controllers
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("UserInfo", "Account", new { id = model.Id });
                     }
                     else
                     {

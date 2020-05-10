@@ -1,6 +1,7 @@
 ﻿@model MyProject.ViewModels.UserViewModel
 
-<div>
-    <p>Имя - @Model.UserName</p><br />
-    <p>Email - @Model.Email</p><br />
-</div>
+    <div>
+        <p>Имя - @Model.UserName</p><br />
+        <p>Email - @Model.Email</p><br />
+        <a class="btn btn-sm btn-primary" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a>
+    </div>
