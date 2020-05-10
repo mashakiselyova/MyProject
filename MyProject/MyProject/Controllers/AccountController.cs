@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyProject.Models;
 using MyProject.ViewModels;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MyProject.Controllers
@@ -97,6 +96,13 @@ namespace MyProject.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> UserInfo(string name)
+        {
+            User user = await _userManager.FindByNameAsync(name);
+            UserViewModel model = new UserViewModel { UserName = user.UserName, Email = user.Email };
+            return View(model);
         }
     }
 }
