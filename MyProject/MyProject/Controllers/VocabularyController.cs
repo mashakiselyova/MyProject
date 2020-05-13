@@ -7,16 +7,16 @@ namespace MyProject.Controllers
 {
     public class VocabularyController : Controller
     {
-        private VocabularyService _vocabularyService;
+        private VocabularyRepository _vocabularyRepository;
 
-        public VocabularyController(VocabularyService vocabularyService)
+        public VocabularyController(VocabularyRepository vocabularyRepository)
         {
-            _vocabularyService = vocabularyService;
+            _vocabularyRepository = vocabularyRepository;
         }
 
         public IActionResult Index()
         {
-            return View(_vocabularyService.GetAllVocabularies());
+            return View(_vocabularyRepository.GetAllVocabularies());
         }
 
         [HttpGet]
@@ -29,13 +29,27 @@ namespace MyProject.Controllers
         public async Task<IActionResult> Create(string name)
         {
             Vocabulary vocabulary = new Vocabulary { Name = name };
-            await _vocabularyService.AddVocabularyAsync(vocabulary);
+            await _vocabularyRepository.AddVocabularyAsync(vocabulary);
             return RedirectToAction("Index");
         }
 
-        public IActionResult ShowVocabulary(int id)
+        public async Task<IActionResult> ShowVocabularyAsync(int id)
         {
-            return View(_vocabularyService.GetVocabulary(id));
+            var result = await _vocabularyRepository.GetVocabularyAsync(id);
+            return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult CreateWord(int vocabularyId)
+        {
+            return View(new Word { VocabularyId = vocabularyId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateWord(Word word)
+        {
+            await _vocabularyRepository.CreateWord(word);
+            return RedirectToAction("ShowVocabulary", new { id = word.VocabularyId });
         }
 
     }

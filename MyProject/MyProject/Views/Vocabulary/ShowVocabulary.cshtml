@@ -1,5 +1,12 @@
 ﻿@model MyProject.Models.Vocabulary
 
-<div>
-    <p2>@Model.Name</p2>
-</div>
+    <div>
+        <p>@Model.Name</p>
+        <a class="btn btn-info" asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id">Добавить слово</a>
+        <ul>
+            @foreach(var word in Model.Words)
+            {
+                <li>@word.Original - @word.Translations[0].Word</li>
+            }
+        </ul>
+    </div>

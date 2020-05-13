@@ -1,4 +1,5 @@
-﻿using MyProject.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyProject.DB
 {
-    public class VocabularyService
+    public class VocabularyRepository
     {
         private ApplicationContext _context;
 
-        public VocabularyService(ApplicationContext context)
+        public VocabularyRepository(ApplicationContext context)
         {
             _context = context;
         }
@@ -27,9 +28,15 @@ namespace MyProject.DB
             return _context.Vocabularies.ToList();
         }
 
-        public Vocabulary GetVocabulary(int id)
+        public async Task<Vocabulary> GetVocabularyAsync(int id)
         {
-            return _context.Vocabularies.Find(id);
+            return await _context.Vocabularies.Include(v => v.Words).ThenInclude(w => w.Translations).SingleOrDefaultAsync(v => v.Id == id);
+        }
+
+        public async Task CreateWord(Word word)
+        {
+            await _context.Words.AddAsync(word);
+            await _context.SaveChangesAsync();
         }
     }
 }
