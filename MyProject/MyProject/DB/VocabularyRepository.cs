@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyProject.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,9 @@ namespace MyProject.DB
 
         public async Task<Vocabulary> GetVocabularyAsync(int id)
         {
-            return await _context.Vocabularies.Include(v => v.Words).ThenInclude(w => w.Translations).SingleOrDefaultAsync(v => v.Id == id);
+            return await _context.Vocabularies.Include(v => v.Words)
+                .ThenInclude(w => w.Translations)
+                .SingleOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task CreateWord(Word word)

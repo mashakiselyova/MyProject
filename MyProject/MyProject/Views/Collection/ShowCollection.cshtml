@@ -1,0 +1,12 @@
+﻿@model MyProject.Models.Collection
+
+<div>
+    <p>@Model.Name</p>
+    @*<a class="btn btn-info" asp-controller="Collection" asp-action="AddWord" asp-route-vocabularyId="@Model.Id">Добавить слово</a>
+    <ul>
+        @foreach (var word in Model.RevisionWords)
+        {
+            <li>@word.Original - @word.Translations[0].Word</li>
+        }
+    </ul>*@
+</div>

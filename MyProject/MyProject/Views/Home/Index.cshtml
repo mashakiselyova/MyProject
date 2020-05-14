@@ -5,13 +5,12 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div>
-        <a class="btn btn-info" asp-controller="Vocabulary">Словари</a>
-        <a class="btn btn-info" asp-controller="Vocabulary" asp-action="Create">Создать словарь</a>
-    </div>
+        <a class="btn btn-info" asp-controller="Collection">Мои коллекции</a>
+        <a class="btn btn-info" asp-controller="Collection" asp-action="Create">Создать коллекцию</a>
+    </div><br />
 }
-else
-{
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-    </div>
-}
+<div>
+    <a class="btn btn-info" asp-controller="Vocabulary">Словари</a>
+    <a class="btn btn-info" asp-controller="Vocabulary" asp-action="Create">Создать словарь</a>
+</div>
+
