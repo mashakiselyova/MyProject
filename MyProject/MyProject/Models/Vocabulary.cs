@@ -7,6 +7,6 @@ namespace MyProject.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Word> Words { get; set; }
-        public int CollectionId { get; set; }
+        public List<Collection> Collections { get; set; }
     }
 }

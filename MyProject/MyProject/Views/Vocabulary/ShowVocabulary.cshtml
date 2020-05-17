@@ -2,6 +2,7 @@
 
     <div>
         <p>@Model.Name</p>
+        <a class="btn btn-sm btn-danger" asp-controller="Vocabulary" asp-action="Delete" asp-route-id="@Model.Id">Удалить словарь</a>
         <a class="btn btn-info" asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id">Добавить слово</a>
         <ul>
             @foreach(var word in Model.Words)

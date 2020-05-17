@@ -26,6 +26,12 @@ namespace MyProject.DB
             await _context.SaveChangesAsync();
         }
 
+        public void DeleteCollection(int id)
+        {
+            _context.Collections.Remove(_context.Collections.Find(id));
+            _context.SaveChanges();
+        }
+
         public async Task<Collection> GetCollectionAsync(int id)
         {
             return await _context.Collections.Include(c => c.RevisionWords)

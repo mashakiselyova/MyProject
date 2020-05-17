@@ -15,7 +15,7 @@ namespace MyProject.DB
             _context = context;
         }
 
-        public async Task AddVocabularyAsync(Vocabulary vocabulary)
+        public async Task CreateVocabularyAsync(Vocabulary vocabulary)
         {
             
             await _context.Vocabularies.AddAsync(vocabulary);
@@ -38,6 +38,12 @@ namespace MyProject.DB
         {
             await _context.Words.AddAsync(word);
             await _context.SaveChangesAsync();
+        }
+
+        public void DeleteVocabulary(int id)
+        {
+            _context.Vocabularies.Remove(_context.Vocabularies.Find(id));
+            _context.SaveChanges();
         }
     }
 }

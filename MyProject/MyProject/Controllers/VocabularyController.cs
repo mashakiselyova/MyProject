@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyProject.DB;
 using MyProject.Models;
 using System.Threading.Tasks;
@@ -29,7 +30,15 @@ namespace MyProject.Controllers
         public async Task<IActionResult> Create(string name)
         {
             Vocabulary vocabulary = new Vocabulary { Name = name };
-            await _vocabularyRepository.AddVocabularyAsync(vocabulary);
+            await _vocabularyRepository.CreateVocabularyAsync(vocabulary);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public IActionResult Delete(int id)
+        {
+            _vocabularyRepository.DeleteVocabulary(id);
             return RedirectToAction("Index");
         }
 
@@ -51,6 +60,7 @@ namespace MyProject.Controllers
             await _vocabularyRepository.CreateWord(word);
             return RedirectToAction("ShowVocabulary", new { id = word.VocabularyId });
         }
+
 
     }
 }

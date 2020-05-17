@@ -51,6 +51,12 @@ namespace MyProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Delete(int id)
+        {
+            _collectionRepository.DeleteCollection(id);
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> ShowCollectionAsync(int id)
         {
             return View(await _collectionRepository.GetCollectionAsync(id));
