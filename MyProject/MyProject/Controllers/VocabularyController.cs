@@ -61,6 +61,12 @@ namespace MyProject.Controllers
             return RedirectToAction("ShowVocabulary", new { id = word.VocabularyId });
         }
 
-
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteWord(int wordId, int vocabularyId)
+        {
+            _vocabularyRepository.DeleteWord(wordId);
+            return RedirectToAction("ShowVocabulary", new { id = vocabularyId });
+        }
     }
 }

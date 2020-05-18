@@ -45,5 +45,12 @@ namespace MyProject.DB
             _context.Vocabularies.Remove(_context.Vocabularies.Find(id));
             _context.SaveChanges();
         }
+
+        public void DeleteWord(int id)
+        {
+            var word = _context.Words.Include(w => w.Translations).SingleOrDefault(w => w.Id == id);
+            _context.Words.Remove(word);
+            _context.SaveChanges();
+        }
     }
 }
