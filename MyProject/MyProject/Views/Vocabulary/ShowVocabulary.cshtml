@@ -2,10 +2,14 @@
 
 <div>
     <p>@Model.Name</p>
-    <a asp-controller="Vocabulary" asp-action="DeleteVocabulary" asp-route-id="@Model.Id"
-       class="btn btn-sm btn-danger">
-        Удалить словарь
-    </a>
+    @if (User.IsInRole("admin"))
+    {
+        <a asp-controller="Vocabulary" asp-action="DeleteVocabulary" asp-route-id="@Model.Id"
+           class="btn btn-sm btn-danger">
+            Удалить словарь
+        </a>
+    }
+
     <a asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id" class="btn btn-info">
         Добавить слово
     </a>
@@ -14,10 +18,21 @@
         {
             <li>
                 @word.Original - @word.Translations[0].Word
-                <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
-                   asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
-                    Удалить слово
-                </a>
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
+                       asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
+                        Удалить слово
+                    </a>
+                }
+                @if (Model.Collections != null)
+                {
+                    <a asp-controller="Collection" asp-action="AddWord" asp-route-id="@word.Id"
+                       asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-info">
+                        Добавить
+                    </a>
+                }
+
             </li>
         }
     </ul>

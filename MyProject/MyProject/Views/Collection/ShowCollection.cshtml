@@ -1,14 +1,22 @@
 ﻿@model MyProject.Models.Collection
 
-    <div>
-        <p>@Model.Name</p>
-        <a class="btn btn-sm btn-danger" asp-controller="Collection" asp-action="DeleteCollection" asp-route-id="@Model.Id">Удалить коллекцию</a>
+<div>
+    <p>@Model.Name</p>
+    <a asp-controller="Collection" asp-action="DeleteCollection" asp-route-id="@Model.Id"
+       class="btn btn-sm btn-danger">
+        Удалить коллекцию
+    </a>
 
-        @*<a class="btn btn-info" asp-controller="Collection" asp-action="AddWord" asp-route-vocabularyId="@Model.Id">Добавить слово</a>
-        <ul>
-            @foreach (var word in Model.RevisionWords)
-            {
-                <li>@word.Original - @word.Translations[0].Word</li>
-            }
-        </ul>*@
-    </div>
+    <a asp-controller="Vocabulary" asp-action="ShowVocabulary" asp-route-id="@Model.VocabularyId"
+       asp-route-collectionId="@Model.Id"
+       class="btn btn-info">
+        Добавить слово
+    </a>
+
+    <ul>
+        @foreach (var word in Model.RevisionWords)
+        {
+            <li>@word.Word.Original - @word.Word.Translations[0].Word</li>
+        }
+    </ul>
+</div>

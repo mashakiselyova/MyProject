@@ -39,5 +39,13 @@ namespace MyProject.DB
                 .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
+
+        public async Task AddWordAsync(int id, int collectionId)
+        {
+            var word = await _context.Words.Include(w => w.Translations).SingleOrDefaultAsync(w => w.Id == id);
+            var revisionWord = new RevisionWord { Word = word, CollectionId = collectionId };
+            await _context.RevisionWords.AddAsync(revisionWord);
+            await _context.SaveChangesAsync();
+        }
     }
 }

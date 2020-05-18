@@ -34,6 +34,14 @@ namespace MyProject.DB
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
+        public async Task<Vocabulary> GetVocabularyWithCollectionsAsync(int id)
+        {
+            return await _context.Vocabularies.Include(v => v.Collections)
+                .Include(v => v.Words)
+                .ThenInclude(w => w.Translations)
+                .SingleOrDefaultAsync(v => v.Id == id);
+        }
+
         public async Task CreateWordAsync(Word word)
         {
             await _context.Words.AddAsync(word);

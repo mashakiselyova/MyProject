@@ -59,6 +59,12 @@ namespace MyProject.Controllers
             return View(await _collectionRepository.GetCollectionAsync(id));
         }
 
+        public async Task<IActionResult> AddWordAsync(int id, int collectionId)
+        {
+            await _collectionRepository.AddWordAsync(id, collectionId);
+            return RedirectToAction("ShowCollection", new { id = collectionId });
+        }
+
         private string GetCurrentUserId()
         {
             return _userManager.GetUserId(HttpContext.User);

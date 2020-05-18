@@ -8,11 +8,13 @@ namespace MyProject.Controllers
 {
     public class VocabularyController : Controller
     {
-        private VocabularyRepository _vocabularyRepository;
+        private readonly VocabularyRepository _vocabularyRepository;
+        private readonly CollectionRepository _collectionRepository;
 
-        public VocabularyController(VocabularyRepository vocabularyRepository)
+        public VocabularyController(VocabularyRepository vocabularyRepository, CollectionRepository collectionRepository)
         {
             _vocabularyRepository = vocabularyRepository;
+            _collectionRepository = collectionRepository;
         }
 
         public IActionResult Index()
@@ -42,10 +44,15 @@ namespace MyProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> ShowVocabularyAsync(int id)
+        public async Task<IActionResult> ShowVocabularyAsync(int id, int collectionId = 0)
         {
-            var result = await _vocabularyRepository.GetVocabularyAsync(id);
-            return View(result);
+            var vocabulary = await _vocabularyRepository.GetVocabularyAsync(id);
+            if (collectionId != 0)
+            {
+                var collection = await _collectionRepository.GetCollectionAsync(collectionId);
+                vocabulary.Collections.Add(collection);
+            }
+            return View(vocabulary);
         }
 
         [HttpGet]

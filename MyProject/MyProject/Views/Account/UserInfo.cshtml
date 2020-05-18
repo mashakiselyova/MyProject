@@ -1,8 +1,12 @@
 ﻿@model MyProject.ViewModels.UserViewModel
 
-    <div>
-        <p>Имя - @Model.UserName</p><br />
-        <p>Email - @Model.Email</p><br />
-        <a class="btn btn-sm btn-primary" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a>
-        <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="ChangePassword" asp-route-id="@Model.Id">Сменить пароль</a>
-    </div>
+<div>
+    <p>Имя - @Model.UserName</p><br />
+    <p>Email - @Model.Email</p><br />
+    <a asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">
+        Редактировать
+    </a>
+    <a asp-controller="Account" asp-action="ChangePassword" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">
+        Сменить пароль
+    </a>
+</div>
