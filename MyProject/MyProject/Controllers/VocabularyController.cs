@@ -21,13 +21,13 @@ namespace MyProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateVocabulary()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> CreateVocabularyAsync(string name)
         {
             Vocabulary vocabulary = new Vocabulary { Name = name };
             await _vocabularyRepository.CreateVocabularyAsync(vocabulary);
@@ -36,7 +36,7 @@ namespace MyProject.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteVocabulary(int id)
         {
             _vocabularyRepository.DeleteVocabulary(id);
             return RedirectToAction("Index");
@@ -55,9 +55,9 @@ namespace MyProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateWord(Word word)
+        public async Task<IActionResult> CreateWordAsync(Word word)
         {
-            await _vocabularyRepository.CreateWord(word);
+            await _vocabularyRepository.CreateWordAsync(word);
             return RedirectToAction("ShowVocabulary", new { id = word.VocabularyId });
         }
 

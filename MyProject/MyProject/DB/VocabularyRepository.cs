@@ -34,7 +34,7 @@ namespace MyProject.DB
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task CreateWord(Word word)
+        public async Task CreateWordAsync(Word word)
         {
             await _context.Words.AddAsync(word);
             await _context.SaveChangesAsync();

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,14 +29,14 @@ namespace MyProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateCollection()
         {
             var model = new CreateCollectionViewModel { Vocabularies = _vocabularyRepository.GetAllVocabularies() };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreateCollectionViewModel model)
+        public async Task<IActionResult> CreateCollectionAsync(CreateCollectionViewModel model)
         {
             var collection = new Collection
             {
@@ -51,7 +48,7 @@ namespace MyProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult DeleteCollection(int id)
         {
             _collectionRepository.DeleteCollection(id);
             return RedirectToAction("Index");
