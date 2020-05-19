@@ -1,19 +1,11 @@
 ﻿@model IEnumerable<MyProject.Models.Vocabulary>
 
-@if (Model == null)
-{
-    <div>
-        Словарей нет
-    </div>
-}
-else
-{
-    <div>
-        <ul>
-            @foreach (var vocabulary in Model)
-            {
-                <li><a asp-action="ShowVocabulary" asp-route-id="@vocabulary.Id">@vocabulary.Name</a></li>
-            }
-        </ul>
-    </div>
-}
+<div class="card">
+    <ul class="list-group list-group-flush">
+        @foreach (var vocabulary in Model)
+        {
+            <li class="list-group-item"><a asp-action="ShowVocabulary" asp-route-id="@vocabulary.Id">@vocabulary.Name</a></li>
+        }
+    </ul>
+</div>
+

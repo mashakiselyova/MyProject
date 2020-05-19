@@ -1,39 +1,44 @@
 ﻿@model MyProject.Models.Vocabulary
 
-<div>
-    <p>@Model.Name</p>
-    @if (User.IsInRole("admin"))
-    {
-        <a asp-controller="Vocabulary" asp-action="DeleteVocabulary" asp-route-id="@Model.Id"
-           class="btn btn-sm btn-danger">
-            Удалить словарь
-        </a>
-    }
+<div class="card">
+    <h5 class="card-header">@Model.Name</h5>
 
-    <a asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id" class="btn btn-info">
-        Добавить слово
-    </a>
-    <ul>
-        @foreach (var word in Model.Words)
+    <div class="card-body">
+        @if (User.IsInRole("admin"))
         {
-            <li>
-                @word.Original - @word.Translations[0].Word
-                @if (User.IsInRole("admin"))
-                {
-                    <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
-                       asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
-                        Удалить слово
-                    </a>
-                }
-                @if (Model.Collections != null)
-                {
-                    <a asp-controller="Collection" asp-action="AddWord" asp-route-id="@word.Id"
-                       asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-info">
-                        Добавить
-                    </a>
-                }
-
-            </li>
+            <a asp-controller="Vocabulary" asp-action="DeleteVocabulary" asp-route-id="@Model.Id"
+               class="btn btn-danger">
+                Удалить словарь
+            </a>
         }
-    </ul>
+        <a asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id" class="btn btn-info">
+            Добавить слово
+        </a>
+
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                @foreach (var word in Model.Words)
+                {
+                    <li class="list-group-item">
+                        @word.Original - @word.Translations[0].Word
+                        @if (User.IsInRole("admin"))
+                        {
+                            <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
+                               asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
+                                Удалить слово
+                            </a>
+                        }
+                        @if (Model.Collections != null)
+                        {
+                            <a asp-controller="Collection" asp-action="AddWord" asp-route-id="@word.Id"
+                               asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-info">
+                                Добавить
+                            </a>
+                        }
+
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>

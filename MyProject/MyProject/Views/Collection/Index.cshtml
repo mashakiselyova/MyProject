@@ -1,19 +1,12 @@
 ﻿@model IEnumerable<MyProject.Models.Collection>
 
-@if (Model == null)
-{
-    <div>
-        Коллекций нет
-    </div>
-}
-else
-{
-    <div>
-        <ul>
-            @foreach (var collection in Model)
-            {
-                <li><a asp-action="ShowCollection" asp-route-id="@collection.Id">@collection.Name</a></li>
-            }
-        </ul>
-    </div>
-}
+
+<div class="card">
+    <ul class="list-group list-group-flush">
+        @foreach (var collection in Model)
+        {
+            <li class="list-group-item"><a asp-action="ShowCollection" asp-route-id="@collection.Id">@collection.Name</a></li>
+        }
+    </ul>
+</div>
+
