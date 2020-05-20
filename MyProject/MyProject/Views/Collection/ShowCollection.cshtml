@@ -16,7 +16,13 @@
             <ul class="list-group list-group-flush">
                 @foreach (var word in Model.RevisionWords)
                 {
-                    <li class="list-group-item">@word.Word.Original - @word.Word.Translations[0].Word</li>
+                    <li class="list-group-item">
+                        @word.Word.Original - @word.Word.Translations[0].Word
+                        <a asp-controller="Collection" asp-action="DeleteRevisionWord" asp-route-wordId="@word.Id"
+                           asp-route-collectionId="@Model.Id" class="btn btn-sm btn-danger">
+                            Удалить
+                        </a>
+                    </li>
                 }
             </ul>
         </div>

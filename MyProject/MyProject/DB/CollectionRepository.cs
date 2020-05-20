@@ -47,5 +47,12 @@ namespace MyProject.DB
             await _context.RevisionWords.AddAsync(revisionWord);
             await _context.SaveChangesAsync();
         }
+
+        public void DeleteRevisionWord(int id)
+        {
+            var revisionWord = _context.RevisionWords.Find(id);
+            _context.RevisionWords.Remove(revisionWord);
+            _context.SaveChanges();
+        }
     }
 }

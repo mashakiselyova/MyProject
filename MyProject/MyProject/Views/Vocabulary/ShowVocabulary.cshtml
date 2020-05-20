@@ -25,13 +25,13 @@
                         {
                             <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
                                asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
-                                Удалить слово
+                                Удалить
                             </a>
                         }
                         @if (Model.Collections != null)
                         {
                             <a asp-controller="Collection" asp-action="AddWord" asp-route-id="@word.Id"
-                               asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-info">
+                               asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-sm btn-info">
                                 Добавить
                             </a>
                         }

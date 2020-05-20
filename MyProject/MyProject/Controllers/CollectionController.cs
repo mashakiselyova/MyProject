@@ -65,6 +65,13 @@ namespace MyProject.Controllers
             return RedirectToAction("ShowCollection", new { id = collectionId });
         }
 
+        [HttpGet]
+        public IActionResult DeleteRevisionWord(int wordId, int collectionId)
+        {
+            _collectionRepository.DeleteRevisionWord(wordId);
+            return RedirectToAction("ShowCollection", new { id = collectionId });
+        }
+
         private string GetCurrentUserId()
         {
             return _userManager.GetUserId(HttpContext.User);
