@@ -48,7 +48,7 @@ namespace MyProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Languages",
+                name: "Dictionaries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -57,7 +57,7 @@ namespace MyProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Languages", x => x.Id);
+                    table.PrimaryKey("PK_Dictionaries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,15 +174,15 @@ namespace MyProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    LanguageId = table.Column<int>(nullable: false)
+                    DictionaryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Collections_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
+                        name: "FK_Collections_Dictionaries_DictionaryId",
+                        column: x => x.DictionaryId,
+                        principalTable: "Dictionaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -200,15 +200,15 @@ namespace MyProject.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Original = table.Column<string>(nullable: true),
-                    LanguageId = table.Column<int>(nullable: false)
+                    DictionaryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Words", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Words_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
+                        name: "FK_Words_Dictionaries_DictionaryId",
+                        column: x => x.DictionaryId,
+                        principalTable: "Dictionaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -262,7 +262,7 @@ namespace MyProject.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0", "a90fda58-1b63-4cd7-a5d5-8f45ad8c3e0c", "admin", "ADMIN" });
+                values: new object[] { "0", "2cfc4a19-b66f-417a-8c6e-d241e3426126", "admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -304,9 +304,9 @@ namespace MyProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Collections_LanguageId",
+                name: "IX_Collections_DictionaryId",
                 table: "Collections",
-                column: "LanguageId");
+                column: "DictionaryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Collections_UserId",
@@ -329,9 +329,9 @@ namespace MyProject.Migrations
                 column: "WordId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Words_LanguageId",
+                name: "IX_Words_DictionaryId",
                 table: "Words",
-                column: "LanguageId");
+                column: "DictionaryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -370,7 +370,7 @@ namespace MyProject.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Languages");
+                name: "Dictionaries");
         }
     }
 }

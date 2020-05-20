@@ -6,46 +6,46 @@ using System.Threading.Tasks;
 
 namespace MyProject.DB
 {
-    public class LanguageRepository
+    public class DictionaryRepository
     {
         private ApplicationContext _context;
 
-        public LanguageRepository(ApplicationContext context)
+        public DictionaryRepository(ApplicationContext context)
         {
             _context = context;
         }
 
-        public async Task CreateLanguageAsync(Language language)
+        public async Task CreateDictionaryAsync(Dictionary dictionary)
         {
             
-            await _context.Languages.AddAsync(language);
+            await _context.Dictionaries.AddAsync(dictionary);
             await _context.SaveChangesAsync();
         }
 
-        public List<Language> GetAllLanguages()
+        public List<Dictionary> GetAllDictionaries()
         {
-            return _context.Languages.ToList();
+            return _context.Dictionaries.ToList();
         }
         
-        public async Task<Language> GetLanguageAsync(int id)
+        public async Task<Dictionary> GetDictionaryAsync(int id)
         {
-            return await _context.Languages.Include(v => v.Words)
+            return await _context.Dictionaries.Include(v => v.Words)
                 .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<Language> GetLanguageWithCollectionsAsync(int id)
+        public async Task<Dictionary> GetDictionaryWithCollectionsAsync(int id)
         {
-            return await _context.Languages.Include(v => v.Collections)
+            return await _context.Dictionaries.Include(v => v.Collections)
                 .Include(v => v.Words)
                 .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<int> GetLanguageIdByWordIdAsync(int wordId)
+        public async Task<int> GetDictionaryIdByWordIdAsync(int wordId)
         {
             var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == wordId);
-            return word.LanguageId;
+            return word.DictionaryId;
         }
 
         public async Task CreateWordAsync(Word word)
@@ -54,9 +54,9 @@ namespace MyProject.DB
             await _context.SaveChangesAsync();
         }
 
-        public void DeleteLanguage(int id)
+        public void DeleteDictionary(int id)
         {
-            _context.Languages.Remove(_context.Languages.Find(id));
+            _context.Dictionaries.Remove(_context.Dictionaries.Find(id));
             _context.SaveChanges();
         }
 

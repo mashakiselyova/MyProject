@@ -10,6 +10,6 @@ namespace MyProject.Models
         public string UserId { get; set; }
         public string Name { get; set; }
         public List<RevisionWord> RevisionWords { get; set; }
-        public int LanguageId { get; set; }
+        public int DictionaryId { get; set; }
     }
 }

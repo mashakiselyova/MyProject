@@ -6,7 +6,7 @@ namespace MyProject.ViewModels
     public class CreateCollectionViewModel
     {
         public string CollectionName { get; set; }
-        public int LanguageId { get; set; }
-        public List<Language> Languages { get; set; }
+        public int DictionaryId { get; set; }
+        public List<Dictionary> Dictionaries { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace MyProject.Migrations
                         new
                         {
                             Id = "0",
-                            ConcurrencyStamp = "a90fda58-1b63-4cd7-a5d5-8f45ad8c3e0c",
+                            ConcurrencyStamp = "2cfc4a19-b66f-417a-8c6e-d241e3426126",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -166,7 +166,7 @@ namespace MyProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LanguageId")
+                    b.Property<int>("DictionaryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -177,14 +177,14 @@ namespace MyProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LanguageId");
+                    b.HasIndex("DictionaryId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("MyProject.Models.Language", b =>
+            modelBuilder.Entity("MyProject.Models.Dictionary", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -196,7 +196,7 @@ namespace MyProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Dictionaries");
                 });
 
             modelBuilder.Entity("MyProject.Models.RevisionWord", b =>
@@ -316,7 +316,7 @@ namespace MyProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LanguageId")
+                    b.Property<int>("DictionaryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Original")
@@ -324,7 +324,7 @@ namespace MyProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LanguageId");
+                    b.HasIndex("DictionaryId");
 
                     b.ToTable("Words");
                 });
@@ -382,9 +382,9 @@ namespace MyProject.Migrations
 
             modelBuilder.Entity("MyProject.Models.Collection", b =>
                 {
-                    b.HasOne("MyProject.Models.Language", null)
+                    b.HasOne("MyProject.Models.Dictionary", null)
                         .WithMany("Collections")
-                        .HasForeignKey("LanguageId")
+                        .HasForeignKey("DictionaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -417,9 +417,9 @@ namespace MyProject.Migrations
 
             modelBuilder.Entity("MyProject.Models.Word", b =>
                 {
-                    b.HasOne("MyProject.Models.Language", null)
+                    b.HasOne("MyProject.Models.Dictionary", null)
                         .WithMany("Words")
-                        .HasForeignKey("LanguageId")
+                        .HasForeignKey("DictionaryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

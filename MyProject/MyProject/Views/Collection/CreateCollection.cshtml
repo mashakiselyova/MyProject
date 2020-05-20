@@ -6,12 +6,12 @@
             <input type="text" asp-for="CollectionName" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="LanguageId" class="control-label">Словарь</label>
-            <select asp-for="LanguageId" class="form-control">
+            <label asp-for="DictionaryId" class="control-label">Словарь</label>
+            <select asp-for="DictionaryId" class="form-control">
                 <option selected="selected">Выберите категорию</option>
-                @foreach (var language in Model.Languages)
+                @foreach (var dictionary in Model.Dictionaries)
                 {
-                    <option value="@language.Id">@language.Name</option>
+                    <option value="@dictionary.Id">@dictionary.Name</option>
                 }
             </select>
         </div>

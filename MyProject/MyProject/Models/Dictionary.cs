@@ -2,7 +2,7 @@
 
 namespace MyProject.Models
 {
-    public class Language
+    public class Dictionary
     {
         public int Id { get; set; }
         public string Name { get; set; }
