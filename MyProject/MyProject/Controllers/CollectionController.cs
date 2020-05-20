@@ -13,14 +13,14 @@ namespace MyProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly CollectionRepository _collectionRepository;
-        private readonly VocabularyRepository _vocabularyRepository;
+        private readonly LanguageRepository _languageRepository;
 
         public CollectionController(UserManager<User> userManager, CollectionRepository collectionRepository, 
-            VocabularyRepository vocabularyRepository)
+            LanguageRepository languageRepository)
         {
             _userManager = userManager;
             _collectionRepository = collectionRepository;
-            _vocabularyRepository = vocabularyRepository;
+            _languageRepository = languageRepository;
         }
 
         public IActionResult Index()
@@ -31,7 +31,7 @@ namespace MyProject.Controllers
         [HttpGet]
         public IActionResult CreateCollection()
         {
-            var model = new CreateCollectionViewModel { Vocabularies = _vocabularyRepository.GetAllVocabularies() };
+            var model = new CreateCollectionViewModel { Languages = _languageRepository.GetAllLanguages() };
             return View(model);
         }
 
@@ -41,7 +41,7 @@ namespace MyProject.Controllers
             var collection = new Collection
             {
                 Name = model.CollectionName,
-                VocabularyId = model.VocabularyId,
+                LanguageId = model.LanguageId,
                 UserId = GetCurrentUserId()
             };
             await _collectionRepository.CreateCollectionAsync(collection);

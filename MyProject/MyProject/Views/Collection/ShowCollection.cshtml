@@ -7,7 +7,7 @@
            class="btn btn-danger">
             Удалить коллекцию
         </a>
-        <a asp-controller="Vocabulary" asp-action="ShowVocabulary" asp-route-id="@Model.VocabularyId"
+        <a asp-controller="Language" asp-action="ShowLanguage" asp-route-id="@Model.LanguageId"
            asp-route-collectionId="@Model.Id"
            class="btn btn-info">
             Добавить слово
@@ -17,7 +17,7 @@
                 @foreach (var word in Model.RevisionWords)
                 {
                     <li class="list-group-item">
-                        @word.Word.Original - @word.Word.Translations[0].Word
+                        @word.Word.Original - @word.Word.Translations[0].Term
                         <a asp-controller="Collection" asp-action="DeleteRevisionWord" asp-route-wordId="@word.Id"
                            asp-route-collectionId="@Model.Id" class="btn btn-sm btn-danger">
                             Удалить

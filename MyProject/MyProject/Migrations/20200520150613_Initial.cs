@@ -48,6 +48,19 @@ namespace MyProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Languages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -154,19 +167,26 @@ namespace MyProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vocabularies",
+                name: "Collections",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    LanguageId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vocabularies", x => x.Id);
+                    table.PrimaryKey("PK_Collections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vocabularies_AspNetUsers_UserId",
+                        name: "FK_Collections_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Collections_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -179,18 +199,42 @@ namespace MyProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Word = table.Column<string>(nullable: true),
-                    Picture = table.Column<byte[]>(nullable: true),
-                    TimeUntillRevision = table.Column<TimeSpan>(nullable: false),
-                    VocabularyId = table.Column<int>(nullable: true)
+                    Original = table.Column<string>(nullable: true),
+                    LanguageId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Words", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Words_Vocabularies_VocabularyId",
-                        column: x => x.VocabularyId,
-                        principalTable: "Vocabularies",
+                        name: "FK_Words_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RevisionWords",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WordId = table.Column<int>(nullable: true),
+                    CollectionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RevisionWords", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RevisionWords_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RevisionWords_Words_WordId",
+                        column: x => x.WordId,
+                        principalTable: "Words",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -201,24 +245,24 @@ namespace MyProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Word = table.Column<string>(nullable: true),
-                    WordEntryId = table.Column<int>(nullable: true)
+                    Term = table.Column<string>(nullable: true),
+                    WordId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Translations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Translations_Words_WordEntryId",
-                        column: x => x.WordEntryId,
+                        name: "FK_Translations_Words_WordId",
+                        column: x => x.WordId,
                         principalTable: "Words",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0", "e8178bf9-931c-46e8-834f-d5738e0d2c09", "admin", "ADMIN" });
+                values: new object[] { "0", "a90fda58-1b63-4cd7-a5d5-8f45ad8c3e0c", "admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -260,19 +304,34 @@ namespace MyProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Translations_WordEntryId",
-                table: "Translations",
-                column: "WordEntryId");
+                name: "IX_Collections_LanguageId",
+                table: "Collections",
+                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vocabularies_UserId",
-                table: "Vocabularies",
+                name: "IX_Collections_UserId",
+                table: "Collections",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Words_VocabularyId",
+                name: "IX_RevisionWords_CollectionId",
+                table: "RevisionWords",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RevisionWords_WordId",
+                table: "RevisionWords",
+                column: "WordId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Translations_WordId",
+                table: "Translations",
+                column: "WordId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Words_LanguageId",
                 table: "Words",
-                column: "VocabularyId");
+                column: "LanguageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -293,19 +352,25 @@ namespace MyProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RevisionWords");
+
+            migrationBuilder.DropTable(
                 name: "Translations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Collections");
+
+            migrationBuilder.DropTable(
                 name: "Words");
 
             migrationBuilder.DropTable(
-                name: "Vocabularies");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Languages");
         }
     }
 }

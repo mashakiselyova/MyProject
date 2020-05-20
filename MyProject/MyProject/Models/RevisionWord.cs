@@ -6,7 +6,6 @@ namespace MyProject.Models
     {
         public int Id { get; set; }
         public Word Word { get; set; }
-        public TimeSpan TimeUntillRevision { get; set; }
         public int CollectionId { get; set; }
     }
 }

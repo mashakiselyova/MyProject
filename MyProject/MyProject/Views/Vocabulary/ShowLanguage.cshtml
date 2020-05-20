@@ -1,4 +1,4 @@
-﻿@model MyProject.Models.Vocabulary
+﻿@model MyProject.Models.Language
 
 <div class="card">
     <h5 class="card-header">@Model.Name</h5>
@@ -6,12 +6,12 @@
     <div class="card-body">
         @if (User.IsInRole("admin"))
         {
-            <a asp-controller="Vocabulary" asp-action="DeleteVocabulary" asp-route-id="@Model.Id"
+            <a asp-controller="Language" asp-action="DeleteLanguage" asp-route-id="@Model.Id"
                class="btn btn-danger">
                 Удалить словарь
             </a>
         }
-        <a asp-controller="Vocabulary" asp-action="CreateWord" asp-route-vocabularyId="@Model.Id" class="btn btn-info">
+        <a asp-controller="Language" asp-action="CreateWord" asp-route-languageId="@Model.Id" class="btn btn-info">
             Добавить слово
         </a>
 
@@ -20,11 +20,11 @@
                 @foreach (var word in Model.Words)
                 {
                     <li class="list-group-item">
-                        @word.Original - @word.Translations[0].Word
+                        @word.Original - @word.Translations[0].Term
                         @if (User.IsInRole("admin"))
                         {
-                            <a asp-controller="Vocabulary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
-                               asp-route-vocabularyId="@Model.Id" class="btn btn-sm btn-danger">
+                            <a asp-controller="Language" asp-action="DeleteWord" asp-route-wordId="@word.Id"
+                                class="btn btn-sm btn-danger">
                                 Удалить
                             </a>
                         }

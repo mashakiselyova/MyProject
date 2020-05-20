@@ -8,5 +8,4 @@ namespace MyProject.Models
         public byte[] Avatar { get; set; }
         public List<Collection> Collections { get; set; }
     }
-
 }

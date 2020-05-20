@@ -6,40 +6,46 @@ using System.Threading.Tasks;
 
 namespace MyProject.DB
 {
-    public class VocabularyRepository
+    public class LanguageRepository
     {
         private ApplicationContext _context;
 
-        public VocabularyRepository(ApplicationContext context)
+        public LanguageRepository(ApplicationContext context)
         {
             _context = context;
         }
 
-        public async Task CreateVocabularyAsync(Vocabulary vocabulary)
+        public async Task CreateLanguageAsync(Language language)
         {
             
-            await _context.Vocabularies.AddAsync(vocabulary);
+            await _context.Languages.AddAsync(language);
             await _context.SaveChangesAsync();
         }
 
-        public List<Vocabulary> GetAllVocabularies()
+        public List<Language> GetAllLanguages()
         {
-            return _context.Vocabularies.ToList();
+            return _context.Languages.ToList();
         }
-
-        public async Task<Vocabulary> GetVocabularyAsync(int id)
+        
+        public async Task<Language> GetLanguageAsync(int id)
         {
-            return await _context.Vocabularies.Include(v => v.Words)
+            return await _context.Languages.Include(v => v.Words)
                 .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<Vocabulary> GetVocabularyWithCollectionsAsync(int id)
+        public async Task<Language> GetLanguageWithCollectionsAsync(int id)
         {
-            return await _context.Vocabularies.Include(v => v.Collections)
+            return await _context.Languages.Include(v => v.Collections)
                 .Include(v => v.Words)
                 .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(v => v.Id == id);
+        }
+
+        public async Task<int> GetLanguageIdByWordIdAsync(int wordId)
+        {
+            var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == wordId);
+            return word.LanguageId;
         }
 
         public async Task CreateWordAsync(Word word)
@@ -48,9 +54,9 @@ namespace MyProject.DB
             await _context.SaveChangesAsync();
         }
 
-        public void DeleteVocabulary(int id)
+        public void DeleteLanguage(int id)
         {
-            _context.Vocabularies.Remove(_context.Vocabularies.Find(id));
+            _context.Languages.Remove(_context.Languages.Find(id));
             _context.SaveChanges();
         }
 

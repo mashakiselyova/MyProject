@@ -37,7 +37,7 @@ namespace MyProject
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
 
-            services.AddTransient<VocabularyRepository>();
+            services.AddTransient<LanguageRepository>();
             services.AddTransient<CollectionRepository>();
 
             services.AddControllersWithViews();
