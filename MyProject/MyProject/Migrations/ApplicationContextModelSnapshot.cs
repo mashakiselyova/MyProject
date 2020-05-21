@@ -49,7 +49,7 @@ namespace MyProject.Migrations
                         new
                         {
                             Id = "0",
-                            ConcurrencyStamp = "2cfc4a19-b66f-417a-8c6e-d241e3426126",
+                            ConcurrencyStamp = "5e490878-64de-4493-8fd2-0c6a202243b7",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -191,7 +191,10 @@ namespace MyProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("LanguageFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LanguageTo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

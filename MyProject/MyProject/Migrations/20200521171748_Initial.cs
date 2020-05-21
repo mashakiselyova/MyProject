@@ -53,7 +53,8 @@ namespace MyProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    LanguageFrom = table.Column<string>(nullable: true),
+                    LanguageTo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -262,7 +263,7 @@ namespace MyProject.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0", "2cfc4a19-b66f-417a-8c6e-d241e3426126", "admin", "ADMIN" });
+                values: new object[] { "0", "5e490878-64de-4493-8fd2-0c6a202243b7", "admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

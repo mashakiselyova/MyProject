@@ -29,9 +29,8 @@ namespace MyProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDictionaryAsync(string name)
+        public async Task<IActionResult> AddDictionaryAsync(Dictionary dictionary)
         {
-            Dictionary dictionary = new Dictionary { Name = name };
             await _dictionaryRepository.CreateDictionaryAsync(dictionary);
             return RedirectToAction("Index");
         }
