@@ -1,0 +1,28 @@
+﻿@model MyProject.ViewModels.AddRevisionWordViewModel
+
+<div class="card">
+    <h5 class="card-header">@Model.DictionaryName</h5>
+
+    <div class="card-body">
+        <a asp-controller="Dictionary" asp-action="CreateWord" asp-route-dictionaryId="@Model.DictionaryId"
+           class="btn btn-info">
+            Добавить слово
+        </a>
+
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                @foreach (var word in Model.Words)
+                {
+                    <li class="list-group-item">
+                        @word.Original - @word.Translations[0].Term
+                        <a asp-controller="Collection" asp-action="AddRevisionWord" asp-route-id="@word.Id"
+                           asp-route-collectionId="@Model.CollectionId" class="btn btn-sm btn-info">
+                            Добавить
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

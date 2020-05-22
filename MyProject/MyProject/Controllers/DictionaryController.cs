@@ -43,14 +43,9 @@ namespace MyProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> ShowDictionaryAsync(int id, int collectionId = 0)
+        public async Task<IActionResult> ShowDictionaryAsync(int id)
         {
             var dictionary = await _dictionaryRepository.GetDictionaryAsync(id);
-            if (collectionId != 0)
-            {
-                var collection = await _collectionRepository.GetCollectionAsync(collectionId);
-                dictionary.Collections.Add(collection);
-            }
             return View(dictionary);
         }
 

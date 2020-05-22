@@ -59,9 +59,22 @@ namespace MyProject.Controllers
             return View(await _collectionRepository.GetCollectionAsync(id));
         }
 
-        public async Task<IActionResult> AddWordAsync(int id, int collectionId)
+        public async Task<IActionResult> ShowWordsForAddingAsync(int dictionaryId, int collectionId)
         {
-            await _collectionRepository.AddWordAsync(id, collectionId);
+            var dictionary = await _dictionaryRepository.GetDictionaryAsync(dictionaryId);
+            var model = new AddRevisionWordViewModel
+            {
+                DictionaryId = dictionaryId,
+                CollectionId = collectionId,
+                DictionaryName = dictionary.Name,
+                Words = dictionary.Words
+            };
+            return View(model);
+        }
+
+        public async Task<IActionResult> AddRevisionWordAsync(int id, int collectionId)
+        {
+            await _collectionRepository.AddRevisionWordAsync(id, collectionId);
             return RedirectToAction("ShowCollection", new { id = collectionId });
         }
 

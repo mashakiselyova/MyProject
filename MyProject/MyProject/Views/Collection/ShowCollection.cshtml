@@ -7,7 +7,7 @@
            class="btn btn-danger">
             Удалить коллекцию
         </a>
-        <a asp-controller="Dictionary" asp-action="ShowDictionary" asp-route-id="@Model.DictionaryId"
+        <a asp-controller="Collection" asp-action="ShowWordsForAdding" asp-route-dictionaryId="@Model.DictionaryId"
            asp-route-collectionId="@Model.Id"
            class="btn btn-info">
             Добавить слово
