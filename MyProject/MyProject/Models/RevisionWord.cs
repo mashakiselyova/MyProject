@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyProject.Models
+﻿namespace MyProject.Models
 {
     public class RevisionWord
     {

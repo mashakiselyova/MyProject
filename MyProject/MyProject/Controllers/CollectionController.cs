@@ -62,6 +62,11 @@ namespace MyProject.Controllers
         public async Task<IActionResult> ShowWordsForAddingAsync(int dictionaryId, int collectionId)
         {
             var dictionary = await _dictionaryRepository.GetDictionaryAsync(dictionaryId);
+            var collection = await _collectionRepository.GetCollectionAsync(collectionId);
+            foreach(var revisionWord in collection.RevisionWords)
+            {
+                dictionary.Words.Remove(dictionary.Words.Find(w => w.Id == revisionWord.Word.Id));
+            }
             var model = new AddRevisionWordViewModel
             {
                 DictionaryId = dictionaryId,

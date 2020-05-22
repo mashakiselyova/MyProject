@@ -9,12 +9,10 @@ namespace MyProject.Controllers
     public class DictionaryController : Controller
     {
         private readonly DictionaryRepository _dictionaryRepository;
-        private readonly CollectionRepository _collectionRepository;
 
-        public DictionaryController(DictionaryRepository dictionaryRepository, CollectionRepository collectionRepository)
+        public DictionaryController(DictionaryRepository dictionaryRepository)
         {
             _dictionaryRepository = dictionaryRepository;
-            _collectionRepository = collectionRepository;
         }
 
         public IActionResult Index()
