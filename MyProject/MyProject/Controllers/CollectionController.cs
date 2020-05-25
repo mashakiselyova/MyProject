@@ -80,7 +80,8 @@ namespace MyProject.Controllers
         public async Task<IActionResult> AddRevisionWordAsync(int id, int collectionId)
         {
             await _collectionRepository.AddRevisionWordAsync(id, collectionId);
-            return RedirectToAction("ShowCollection", new { id = collectionId });
+            var dictionaryId = await _dictionaryRepository.GetDictionaryIdByCollectionIdAsync(collectionId);
+            return RedirectToAction("ShowWordsForAdding", new { dictionaryId, collectionId });
         }
 
         [HttpGet]

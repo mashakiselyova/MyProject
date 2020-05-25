@@ -6,7 +6,11 @@
     <div class="card-body">
         <a asp-controller="Dictionary" asp-action="CreateWord" asp-route-dictionaryId="@Model.DictionaryId"
            class="btn btn-info">
-            Добавить слово
+            Добавить слово в словарь
+        </a>
+        <a asp-controller="Collection" asp-action="ShowCollection" asp-route-id="@Model.CollectionId"
+           class="btn btn-info">
+            Вернуться к коллекции
         </a>
 
         <div class="card">
