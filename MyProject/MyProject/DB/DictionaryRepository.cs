@@ -29,17 +29,11 @@ namespace MyProject.DB
         
         public async Task<Dictionary> GetDictionaryAsync(int id)
         {
-            return await _context.Dictionaries.Include(v => v.Words)
+            var dictionary = await _context.Dictionaries.Include(d => d.Words)
                 .ThenInclude(w => w.Translations)
-                .SingleOrDefaultAsync(v => v.Id == id);
-        }
-
-        public async Task<Dictionary> GetDictionaryWithCollectionsAsync(int id)
-        {
-            return await _context.Dictionaries.Include(v => v.Collections)
-                .Include(v => v.Words)
-                .ThenInclude(w => w.Translations)
-                .SingleOrDefaultAsync(v => v.Id == id);
+                .SingleOrDefaultAsync(d => d.Id == id);
+            dictionary.Words.Reverse();
+            return dictionary;
         }
 
         public async Task<int> GetDictionaryIdByWordIdAsync(int wordId)

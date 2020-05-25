@@ -34,10 +34,12 @@ namespace MyProject.DB
 
         public async Task<Collection> GetCollectionAsync(int id)
         {
-            return await _context.Collections.Include(c => c.RevisionWords)
+            var collection = await _context.Collections.Include(c => c.RevisionWords)
                 .ThenInclude(r => r.Word)
                 .ThenInclude(w => w.Translations)
-                .SingleOrDefaultAsync(v => v.Id == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
+            collection.RevisionWords.Reverse();
+            return collection;
         }
 
         public async Task AddRevisionWordAsync(int id, int collectionId)
