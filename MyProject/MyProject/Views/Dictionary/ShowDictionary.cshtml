@@ -6,10 +6,9 @@
     <div class="card-body">
         @if (User.IsInRole("admin"))
         {
-            <a asp-controller="Dictionary" asp-action="DeleteDictionary" asp-route-id="@Model.Id"
-               class="btn btn-danger">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteDictionary">
                 Удалить словарь
-            </a>
+            </button>
         }
         <a asp-controller="Dictionary" asp-action="CreateWord" asp-route-dictionaryId="@Model.Id" class="btn btn-info">
             Добавить слово
@@ -23,10 +22,35 @@
                         @word.Original - @word.Translations[0].Term
                         @if (User.IsInRole("admin"))
                         {
-                            <a asp-controller="Dictionary" asp-action="DeleteWord" asp-route-wordId="@word.Id"
-                                class="btn btn-sm btn-danger">
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#deleteWord">
                                 Удалить
-                            </a>
+                            </button>
+
+                            <div class="modal fade" id="deleteWord" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Удаление слова</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Вы уверены, что хотите удалить это слово?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Отмена
+                                            </button>
+                                            <a asp-controller="Dictionary" asp-action="DeleteWord"
+                                               asp-route-wordId="@word.Id" class="btn btn-danger">
+                                                Удалить
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                         @if (Model.Collections != null)
                         {
@@ -39,6 +63,29 @@
                     </li>
                 }
             </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteDictionary" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удаление словаря</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите удалить этот словарь?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <a asp-controller="Dictionary" asp-action="DeleteDictionary" asp-route-id="@Model.Id"
+                   class="btn btn-danger">
+                    Удалить
+                </a>
+            </div>
         </div>
     </div>
 </div>
