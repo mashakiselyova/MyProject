@@ -29,9 +29,7 @@ namespace MyProject.DB
         
         public async Task<Dictionary> GetDictionaryAsync(int id)
         {
-            var dictionary = await _context.Dictionaries.Include(d => d.Words)
-                .ThenInclude(w => w.Translations)
-                .SingleOrDefaultAsync(d => d.Id == id);
+            var dictionary = await _context.Dictionaries.Include(d => d.Words).SingleOrDefaultAsync(d => d.Id == id);
             dictionary.Words.Reverse();
             return dictionary;
         }
@@ -62,7 +60,7 @@ namespace MyProject.DB
 
         public void DeleteWord(int id)
         {
-            var word = _context.Words.Include(w => w.Translations).SingleOrDefault(w => w.Id == id);
+            var word = _context.Words.SingleOrDefault(w => w.Id == id);
             _context.Words.Remove(word);
             _context.SaveChanges();
         }

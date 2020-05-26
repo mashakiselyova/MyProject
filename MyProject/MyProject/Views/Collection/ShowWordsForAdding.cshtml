@@ -18,7 +18,7 @@
                 @foreach (var word in Model.Words)
                 {
                     <li class="list-group-item">
-                        @word.Original - @word.Translations[0].Term
+                        @word.Original - @word.Translation
                         <a asp-controller="Collection" asp-action="AddRevisionWord" asp-route-id="@word.Id"
                            asp-route-collectionId="@Model.CollectionId" class="btn btn-sm btn-info">
                             Добавить

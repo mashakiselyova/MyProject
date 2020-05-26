@@ -19,7 +19,7 @@
                 @foreach (var word in Model.Words)
                 {
                     <li class="list-group-item">
-                        @word.Original - @word.Translations[0].Term
+                        @word.Original - @word.Translation
                         @if (User.IsInRole("admin"))
                         {
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"

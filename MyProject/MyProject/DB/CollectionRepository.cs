@@ -36,7 +36,6 @@ namespace MyProject.DB
         {
             var collection = await _context.Collections.Include(c => c.RevisionWords)
                 .ThenInclude(r => r.Word)
-                .ThenInclude(w => w.Translations)
                 .SingleOrDefaultAsync(c => c.Id == id);
             collection.RevisionWords.Reverse();
             return collection;
@@ -44,7 +43,7 @@ namespace MyProject.DB
 
         public async Task AddRevisionWordAsync(int id, int collectionId)
         {
-            var word = await _context.Words.Include(w => w.Translations).SingleOrDefaultAsync(w => w.Id == id);
+            var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == id);
             var revisionWord = new RevisionWord { Word = word, CollectionId = collectionId };
             await _context.RevisionWords.AddAsync(revisionWord);
             await _context.SaveChangesAsync();

@@ -16,7 +16,7 @@
                 @foreach (var word in Model.RevisionWords)
                 {
                     <li class="list-group-item">
-                        @word.Word.Original - @word.Word.Translations[0].Term
+                        @word.Word.Original - @word.Word.Translation
                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#deleteRevisionWord">
                             Удалить
