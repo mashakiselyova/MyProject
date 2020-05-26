@@ -19,42 +19,17 @@
                 @foreach (var word in Model.Words)
                 {
                     <li class="list-group-item">
-                        @word.Original - @word.Translation
+                        @word.Id - @word.Original - @word.Translation
                         @if (User.IsInRole("admin"))
                         {
                             <a asp-controller="Dictionary" asp-action="EditWord"
                                asp-route-wordId="@word.Id" class="btn btn-sm btn-warning">
                                 Редактировать
                             </a>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#deleteWord">
+                            <a asp-controller="Dictionary" asp-action="DeleteWord"
+                               asp-route-wordId="@word.Id" class="btn btn-sm btn-danger">
                                 Удалить
-                            </button>
-
-                            <div class="modal fade" id="deleteWord" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Удаление слова</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Вы уверены, что хотите удалить это слово?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Отмена
-                                            </button>
-                                            <a asp-controller="Dictionary" asp-action="DeleteWord"
-                                               asp-route-wordId="@word.Id" class="btn btn-danger">
-                                                Удалить
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </a>
                         }
                         @if (Model.Collections != null)
                         {
@@ -63,7 +38,6 @@
                                 Добавить
                             </a>
                         }
-
                     </li>
                 }
             </ul>

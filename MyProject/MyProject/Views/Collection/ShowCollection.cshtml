@@ -17,40 +17,12 @@
                 {
                     <li class="list-group-item">
                         @word.Word.Original - @word.Word.Translation
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="#deleteRevisionWord">
+                        <a asp-controller="Collection" asp-action="DeleteRevisionWord"
+                           asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"
+                           class="btn btn-sm btn-danger">
                             Удалить
-                        </button>
-
-                        <div class="modal fade" id="deleteRevisionWord" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Удаление слова</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Вы уверены, что хотите удалить это слово?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Отмена
-                                        </button>
-                                        <a asp-controller="Collection" asp-action="DeleteRevisionWord"
-                                           asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"
-                                           class="btn btn-danger">
-                                            Удалить
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </a>
                     </li>
-
-
                 }
             </ul>
         </div>
