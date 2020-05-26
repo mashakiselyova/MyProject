@@ -22,6 +22,10 @@
                         @word.Original - @word.Translation
                         @if (User.IsInRole("admin"))
                         {
+                            <a asp-controller="Dictionary" asp-action="EditWord"
+                               asp-route-wordId="@word.Id" class="btn btn-sm btn-warning">
+                                Редактировать
+                            </a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
                                     data-target="#deleteWord">
                                 Удалить

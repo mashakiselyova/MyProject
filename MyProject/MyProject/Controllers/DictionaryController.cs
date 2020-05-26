@@ -62,6 +62,22 @@ namespace MyProject.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
+        public async Task<IActionResult> EditWordAsync(int wordId)
+        {
+            var word = await _dictionaryRepository.GetWordAsync(wordId);
+            return View(word);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public IActionResult EditWord(Word word)
+        {
+            _dictionaryRepository.EditWord(word);
+            return RedirectToAction("ShowDictionary", new { id = word.DictionaryId });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteWordAsync(int wordId)
         {
             var dictionaryId = await _dictionaryRepository.GetDictionaryIdByWordIdAsync(wordId);

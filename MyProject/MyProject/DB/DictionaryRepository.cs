@@ -52,6 +52,17 @@ namespace MyProject.DB
             await _context.SaveChangesAsync();
         }
 
+        public void EditWord(Word word)
+        {
+            _context.Words.Update(word);
+            _context.SaveChanges();
+        }
+
+        public async Task<Word> GetWordAsync(int id)
+        {
+            return await _context.Words.SingleOrDefaultAsync(w => w.Id == id);
+        }
+
         public void DeleteDictionary(int id)
         {
             _context.Dictionaries.Remove(_context.Dictionaries.Find(id));
