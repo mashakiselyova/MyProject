@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyProject.DB
 {
-    public class CollectionRepository
+    public class CollectionService
     {
         private ApplicationContext _context;
 
-        public CollectionRepository(ApplicationContext context)
+        public CollectionService(ApplicationContext context)
         {
             _context = context;
         }
@@ -49,7 +49,7 @@ namespace MyProject.DB
             {
                 Word = word,
                 CollectionId = collectionId,
-                LastReview = DateTime.Today,
+                NextReview = DateTime.Today + new TimeSpan(1, 0, 0, 0),
                 DaysUntilReview = 1
             };
             await _context.RevisionWords.AddAsync(revisionWord);

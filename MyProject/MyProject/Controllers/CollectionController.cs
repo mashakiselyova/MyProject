@@ -12,26 +12,26 @@ namespace MyProject.Controllers
     public class CollectionController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly CollectionRepository _collectionRepository;
-        private readonly DictionaryRepository _dictionaryRepository;
+        private readonly CollectionService _collectionService;
+        private readonly DictionaryService _dictionaryService;
 
-        public CollectionController(UserManager<User> userManager, CollectionRepository collectionRepository, 
-            DictionaryRepository dictionaryRepository)
+        public CollectionController(UserManager<User> userManager, CollectionService collectionService, 
+            DictionaryService dictionaryService)
         {
             _userManager = userManager;
-            _collectionRepository = collectionRepository;
-            _dictionaryRepository = dictionaryRepository;
+            _collectionService = collectionService;
+            _dictionaryService = dictionaryService;
         }
 
         public IActionResult Index()
         {
-            return View(_collectionRepository.GetUserCollections(GetCurrentUserId()));
+            return View(_collectionService.GetUserCollections(GetCurrentUserId()));
         }
 
         [HttpGet]
         public IActionResult CreateCollection()
         {
-            var model = new CreateCollectionViewModel { Dictionaries = _dictionaryRepository.GetAllDictionaries() };
+            var model = new CreateCollectionViewModel { Dictionaries = _dictionaryService.GetAllDictionaries() };
             return View(model);
         }
 
@@ -44,25 +44,25 @@ namespace MyProject.Controllers
                 DictionaryId = model.DictionaryId,
                 UserId = GetCurrentUserId()
             };
-            await _collectionRepository.CreateCollectionAsync(collection);
+            await _collectionService.CreateCollectionAsync(collection);
             return RedirectToAction("Index");
         }
 
         public IActionResult DeleteCollection(int id)
         {
-            _collectionRepository.DeleteCollection(id);
+            _collectionService.DeleteCollection(id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ShowCollectionAsync(int id)
         {
-            return View(await _collectionRepository.GetCollectionAsync(id));
+            return View(await _collectionService.GetCollectionAsync(id));
         }
 
         public async Task<IActionResult> ShowWordsForAddingAsync(int dictionaryId, int collectionId)
         {
-            var dictionary = await _dictionaryRepository.GetDictionaryAsync(dictionaryId);
-            var collection = await _collectionRepository.GetCollectionAsync(collectionId);
+            var dictionary = await _dictionaryService.GetDictionaryAsync(dictionaryId);
+            var collection = await _collectionService.GetCollectionAsync(collectionId);
             foreach(var revisionWord in collection.RevisionWords)
             {
                 dictionary.Words.Remove(dictionary.Words.Find(w => w.Id == revisionWord.Word.Id));
@@ -79,15 +79,15 @@ namespace MyProject.Controllers
 
         public async Task<IActionResult> AddRevisionWordAsync(int id, int collectionId)
         {
-            await _collectionRepository.AddRevisionWordAsync(id, collectionId);
-            var dictionaryId = await _dictionaryRepository.GetDictionaryIdByCollectionIdAsync(collectionId);
+            await _collectionService.AddRevisionWordAsync(id, collectionId);
+            var dictionaryId = await _dictionaryService.GetDictionaryIdByCollectionIdAsync(collectionId);
             return RedirectToAction("ShowWordsForAdding", new { dictionaryId, collectionId });
         }
 
         [HttpGet]
         public IActionResult DeleteRevisionWord(int wordId, int collectionId)
         {
-            _collectionRepository.DeleteRevisionWord(wordId);
+            _collectionService.DeleteRevisionWord(wordId);
             return RedirectToAction("ShowCollection", new { id = collectionId });
         }
 

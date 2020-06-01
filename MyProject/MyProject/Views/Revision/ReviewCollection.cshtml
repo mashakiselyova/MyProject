@@ -1,0 +1,10 @@
+﻿@model MyProject.Models.Collection
+
+<h2>@Model.Name</h2>
+
+<ul>
+    @foreach (var word in Model.RevisionWords)
+    {
+        <li>@word.Word.Original - @word.Word.Translation</li>
+    }
+</ul>

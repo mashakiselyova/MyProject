@@ -8,16 +8,16 @@ namespace MyProject.Controllers
 {
     public class DictionaryController : Controller
     {
-        private readonly DictionaryRepository _dictionaryRepository;
+        private readonly DictionaryService _dictionaryService;
 
-        public DictionaryController(DictionaryRepository dictionaryRepository)
+        public DictionaryController(DictionaryService dictionaryService)
         {
-            _dictionaryRepository = dictionaryRepository;
+            _dictionaryService = dictionaryService;
         }
 
         public IActionResult Index()
         {
-            return View(_dictionaryRepository.GetAllDictionaries());
+            return View(_dictionaryService.GetAllDictionaries());
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace MyProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDictionaryAsync(Dictionary dictionary)
         {
-            await _dictionaryRepository.CreateDictionaryAsync(dictionary);
+            await _dictionaryService.CreateDictionaryAsync(dictionary);
             return RedirectToAction("Index");
         }
 
@@ -37,13 +37,13 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DeleteDictionary(int id)
         {
-            _dictionaryRepository.DeleteDictionary(id);
+            _dictionaryService.DeleteDictionary(id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ShowDictionaryAsync(int id)
         {
-            var dictionary = await _dictionaryRepository.GetDictionaryAsync(id);
+            var dictionary = await _dictionaryService.GetDictionaryAsync(id);
             return View(dictionary);
         }
 
@@ -56,7 +56,7 @@ namespace MyProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateWordAsync(Word word)
         {
-            await _dictionaryRepository.CreateWordAsync(word);
+            await _dictionaryService.CreateWordAsync(word);
             return RedirectToAction("ShowDictionary", new { id = word.DictionaryId });
         }
 
@@ -64,7 +64,7 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditWordAsync(int wordId)
         {
-            var word = await _dictionaryRepository.GetWordAsync(wordId);
+            var word = await _dictionaryService.GetWordAsync(wordId);
             return View(word);
         }
 
@@ -72,7 +72,7 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult EditWord(Word word)
         {
-            _dictionaryRepository.EditWord(word);
+            _dictionaryService.EditWord(word);
             return RedirectToAction("ShowDictionary", new { id = word.DictionaryId });
         }
 
@@ -80,8 +80,8 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteWordAsync(int wordId)
         {
-            var dictionaryId = await _dictionaryRepository.GetDictionaryIdByWordIdAsync(wordId);
-            _dictionaryRepository.DeleteWord(wordId);
+            var dictionaryId = await _dictionaryService.GetDictionaryIdByWordIdAsync(wordId);
+            _dictionaryService.DeleteWord(wordId);
             return RedirectToAction("ShowDictionary", new { id = dictionaryId });
         }
     }

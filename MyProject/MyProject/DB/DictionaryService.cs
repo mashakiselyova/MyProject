@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyProject.DB
 {
-    public class DictionaryRepository
+    public class DictionaryService
     {
         private ApplicationContext _context;
 
-        public DictionaryRepository(ApplicationContext context)
+        public DictionaryService(ApplicationContext context)
         {
             _context = context;
         }
