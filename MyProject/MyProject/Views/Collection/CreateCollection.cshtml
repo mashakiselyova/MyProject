@@ -8,7 +8,7 @@
         <div class="form-group">
             <label asp-for="DictionaryId" class="control-label">Словарь</label>
             <select asp-for="DictionaryId" class="form-control">
-                <option selected="selected">Выберите категорию</option>
+                <option selected="selected">Выберите словарь</option>
                 @foreach (var dictionary in Model.Dictionaries)
                 {
                     <option value="@dictionary.Id">@dictionary.Name</option>

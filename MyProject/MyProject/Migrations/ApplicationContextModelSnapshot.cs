@@ -49,7 +49,7 @@ namespace MyProject.Migrations
                         new
                         {
                             Id = "0",
-                            ConcurrencyStamp = "b5eef3d4-0896-47a7-ad09-a14815bc86f1",
+                            ConcurrencyStamp = "e96849a7-3d37-4dd4-86f8-3183f17b79de",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -211,6 +211,12 @@ namespace MyProject.Migrations
 
                     b.Property<int>("CollectionId")
                         .HasColumnType("int");
+
+                    b.Property<int>("DaysUntilReview")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastReview")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("WordId")
                         .HasColumnType("int");

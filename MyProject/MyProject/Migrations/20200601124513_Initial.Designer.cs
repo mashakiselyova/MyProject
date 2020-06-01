@@ -10,7 +10,7 @@ using MyProject.DB;
 namespace MyProject.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200521171748_Initial")]
+    [Migration("20200601124513_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace MyProject.Migrations
                         new
                         {
                             Id = "0",
-                            ConcurrencyStamp = "5e490878-64de-4493-8fd2-0c6a202243b7",
+                            ConcurrencyStamp = "e96849a7-3d37-4dd4-86f8-3183f17b79de",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -214,6 +214,12 @@ namespace MyProject.Migrations
                     b.Property<int>("CollectionId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DaysUntilReview")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastReview")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("WordId")
                         .HasColumnType("int");
 
@@ -224,26 +230,6 @@ namespace MyProject.Migrations
                     b.HasIndex("WordId");
 
                     b.ToTable("RevisionWords");
-                });
-
-            modelBuilder.Entity("MyProject.Models.Translation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Term")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WordId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WordId");
-
-                    b.ToTable("Translations");
                 });
 
             modelBuilder.Entity("MyProject.Models.User", b =>
@@ -325,6 +311,9 @@ namespace MyProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Original")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Translation")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -409,15 +398,6 @@ namespace MyProject.Migrations
                     b.HasOne("MyProject.Models.Word", "Word")
                         .WithMany()
                         .HasForeignKey("WordId");
-                });
-
-            modelBuilder.Entity("MyProject.Models.Translation", b =>
-                {
-                    b.HasOne("MyProject.Models.Word", null)
-                        .WithMany("Translations")
-                        .HasForeignKey("WordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyProject.Models.Word", b =>

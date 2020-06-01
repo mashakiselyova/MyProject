@@ -19,7 +19,7 @@
                 @foreach (var word in Model.Words)
                 {
                     <li class="list-group-item">
-                        @word.Id - @word.Original - @word.Translation
+                        @word.Original - @word.Translation
                         @if (User.IsInRole("admin"))
                         {
                             <a asp-controller="Dictionary" asp-action="EditWord"

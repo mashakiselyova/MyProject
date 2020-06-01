@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,10 +42,16 @@ namespace MyProject.DB
             return collection;
         }
 
-        public async Task AddRevisionWordAsync(int id, int collectionId)
+        public async Task AddRevisionWordAsync(int wordId, int collectionId)
         {
-            var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == id);
-            var revisionWord = new RevisionWord { Word = word, CollectionId = collectionId };
+            var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == wordId);
+            var revisionWord = new RevisionWord
+            {
+                Word = word,
+                CollectionId = collectionId,
+                LastReview = DateTime.Today,
+                DaysUntilReview = 1
+            };
             await _context.RevisionWords.AddAsync(revisionWord);
             await _context.SaveChangesAsync();
         }
