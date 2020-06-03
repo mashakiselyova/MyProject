@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyProject.DB;
 using MyProject.Models;
+using MyProject.Services;
 using System.Threading.Tasks;
 
 namespace MyProject.Controllers
@@ -9,10 +10,12 @@ namespace MyProject.Controllers
     public class DictionaryController : Controller
     {
         private readonly DictionaryService _dictionaryService;
+        private readonly WordService _wordService;
 
-        public DictionaryController(DictionaryService dictionaryService)
+        public DictionaryController(DictionaryService dictionaryService, WordService wordService)
         {
             _dictionaryService = dictionaryService;
+            _wordService = wordService;
         }
 
         public IActionResult Index()
@@ -56,7 +59,7 @@ namespace MyProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateWordAsync(Word word)
         {
-            await _dictionaryService.CreateWordAsync(word);
+            await _wordService.CreateWordAsync(word);
             return RedirectToAction("ShowDictionary", new { id = word.DictionaryId });
         }
 
@@ -64,7 +67,7 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditWordAsync(int wordId)
         {
-            var word = await _dictionaryService.GetWordAsync(wordId);
+            var word = await _wordService.GetWordAsync(wordId);
             return View(word);
         }
 
@@ -72,7 +75,7 @@ namespace MyProject.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult EditWord(Word word)
         {
-            _dictionaryService.EditWord(word);
+            _wordService.EditWord(word);
             return RedirectToAction("ShowDictionary", new { id = word.DictionaryId });
         }
 
@@ -81,7 +84,7 @@ namespace MyProject.Controllers
         public async Task<IActionResult> DeleteWordAsync(int wordId)
         {
             var dictionaryId = await _dictionaryService.GetDictionaryIdByWordIdAsync(wordId);
-            _dictionaryService.DeleteWord(wordId);
+            _wordService.DeleteWord(wordId);
             return RedirectToAction("ShowDictionary", new { id = dictionaryId });
         }
     }

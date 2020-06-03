@@ -38,36 +38,12 @@ namespace MyProject.DB
         {
             var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == wordId);
             return word.DictionaryId;
-        }
-
-        public async Task CreateWordAsync(Word word)
-        {
-            await _context.Words.AddAsync(word);
-            await _context.SaveChangesAsync();
-        }
-
-        public void EditWord(Word word)
-        {
-            _context.Words.Update(word);
-            _context.SaveChanges();
-        }
-
-        public async Task<Word> GetWordAsync(int id)
-        {
-            return await _context.Words.SingleOrDefaultAsync(w => w.Id == id);
-        }
+        }        
 
         public void DeleteDictionary(int id)
         {
             _context.Dictionaries.Remove(_context.Dictionaries.Find(id));
             _context.SaveChanges();
-        }
-
-        public void DeleteWord(int id)
-        {
-            var word = _context.Words.SingleOrDefault(w => w.Id == id);
-            _context.Words.Remove(word);
-            _context.SaveChanges();
-        }
+        }        
     }
 }

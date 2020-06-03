@@ -40,6 +40,7 @@ namespace MyProject
 
             services.AddTransient<DictionaryService>();
             services.AddTransient<CollectionService>();
+            services.AddTransient<WordService>();
             services.AddTransient<ReviewService>();
             services.AddTransient<DictionaryOptionsService>();
 

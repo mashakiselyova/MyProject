@@ -13,14 +13,11 @@ namespace MyProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly CollectionService _collectionService;
-        private readonly DictionaryService _dictionaryService;
 
-        public CollectionController(UserManager<User> userManager, CollectionService collectionService, 
-            DictionaryService dictionaryService)
+        public CollectionController(UserManager<User> userManager, CollectionService collectionService)
         {
             _userManager = userManager;
             _collectionService = collectionService;
-            _dictionaryService = dictionaryService;
         }
 
         [HttpGet]
@@ -62,9 +59,10 @@ namespace MyProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowWordsForAddingAsync(int dictionaryId, int collectionId)
+        public async Task<IActionResult> ShowWordsForAddingAsync([FromServices] DictionaryService dictionaryService,
+            int dictionaryId, int collectionId)
         {
-            var dictionary = await _dictionaryService.GetDictionaryAsync(dictionaryId);
+            var dictionary = await dictionaryService.GetDictionaryAsync(dictionaryId);
             var collection = await _collectionService.GetCollectionAsync(collectionId);
             foreach(var revisionWord in collection.RevisionWords)
             {
