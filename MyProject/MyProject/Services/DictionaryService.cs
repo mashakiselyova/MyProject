@@ -40,12 +40,6 @@ namespace MyProject.DB
             return word.DictionaryId;
         }
 
-        public async Task<int> GetDictionaryIdByCollectionIdAsync(int collectionId)
-        {
-            var collection = await _context.Collections.SingleOrDefaultAsync(c => c.Id == collectionId);
-            return collection.DictionaryId;
-        }
-
         public async Task CreateWordAsync(Word word)
         {
             await _context.Words.AddAsync(word);

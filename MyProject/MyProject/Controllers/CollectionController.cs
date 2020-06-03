@@ -32,8 +32,7 @@ namespace MyProject.Controllers
         [HttpGet]
         public IActionResult CreateCollection()
         {
-            var model = new CreateCollectionViewModel { Dictionaries = _dictionaryService.GetAllDictionaries() };
-            return View(model);
+            return View();
         }
 
         [HttpPost]

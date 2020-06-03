@@ -1,19 +1,19 @@
 ﻿@model MyProject.ViewModels.CreateCollectionViewModel
+@inject MyProject.Services.DictionaryOptionsService dictionaryOptions
 
-    <form asp-controller="Collection" asp-action="CreateCollection" method="post">
-        <div class="form-group">
-            <label asp-for="CollectionName">Имя коллекции</label>
-            <input type="text" asp-for="CollectionName" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="DictionaryId" class="control-label">Словарь</label>
-            <select asp-for="DictionaryId" class="form-control">
-                <option selected="selected">Выберите словарь</option>
-                @foreach (var dictionary in Model.Dictionaries)
-                {
-                    <option value="@dictionary.Id">@dictionary.Name</option>
-                }
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Создать</button>
-    </form>
+<form asp-controller="Collection" asp-action="CreateCollection" method="post">
+    <div class="form-group">
+        <label asp-for="CollectionName">Имя коллекции</label>
+        <input type="text" asp-for="CollectionName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DictionaryId" class="control-label">Выберите словарь</label>
+        <select asp-for="DictionaryId" class="form-control">
+            @foreach (var dictionary in dictionaryOptions.GetDictionaries())
+            {
+                <option value="@dictionary.Id">@dictionary.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>

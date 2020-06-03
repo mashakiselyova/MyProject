@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyProject.DB;
 using MyProject.Models;
+using MyProject.Services;
 
 namespace MyProject
 {
@@ -40,6 +41,7 @@ namespace MyProject
             services.AddTransient<DictionaryService>();
             services.AddTransient<CollectionService>();
             services.AddTransient<ReviewService>();
+            services.AddTransient<DictionaryOptionsService>();
 
             services.AddControllersWithViews();
         }
