@@ -20,7 +20,7 @@
                     <div>@await Component.InvokeAsync("Login")</div>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Revision">Повторение</a>
+                            <a class="nav-link text-dark" asp-controller="Revision" asp-action="Index">Повторение</a>
                         </li>
                         @if (User.IsInRole("admin"))
                         {

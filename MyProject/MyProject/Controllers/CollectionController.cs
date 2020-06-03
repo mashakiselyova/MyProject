@@ -23,6 +23,7 @@ namespace MyProject.Controllers
             _dictionaryService = dictionaryService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(_collectionService.GetUserCollections(GetCurrentUserId()));
@@ -48,17 +49,20 @@ namespace MyProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult DeleteCollection(int id)
         {
             _collectionService.DeleteCollection(id);
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> ShowCollectionAsync(int id)
         {
             return View(await _collectionService.GetCollectionAsync(id));
         }
 
+        [HttpGet]
         public async Task<IActionResult> ShowWordsForAddingAsync(int dictionaryId, int collectionId)
         {
             var dictionary = await _dictionaryService.GetDictionaryAsync(dictionaryId);
@@ -77,11 +81,12 @@ namespace MyProject.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> AddRevisionWordAsync(int id, int collectionId)
         {
             await _collectionService.AddRevisionWordAsync(id, collectionId);
-            var dictionaryId = await _dictionaryService.GetDictionaryIdByCollectionIdAsync(collectionId);
-            return RedirectToAction("ShowWordsForAdding", new { dictionaryId, collectionId });
+            var collection = await _collectionService.GetCollectionAsync(collectionId);
+            return RedirectToAction("ShowWordsForAdding", new { dictionaryId = collection.Id, collectionId });
         }
 
         [HttpGet]
