@@ -1,5 +1,17 @@
 ﻿@model MyProject.Models.Collection
 
+@*<style>
+    .highlight {
+        background-color: lightblue;
+    }
+</style>*@
+
+@*<script>
+    $('.word-list li').hover(function () {
+        $(this).toggleClass('highlight')
+    });
+</script>*@
+
 <div class="card">
     <h5 class="card-header">@Model.Name</h5>
     <div class="card-body">
@@ -12,7 +24,7 @@
             Добавить слово
         </a>
         <div class="card">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush word-list">
                 @foreach (var word in Model.RevisionWords)
                 {
                     <li class="list-group-item">
