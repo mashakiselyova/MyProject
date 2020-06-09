@@ -1,17 +1,5 @@
 ﻿@model MyProject.Models.Collection
 
-@*<style>
-    .highlight {
-        background-color: lightblue;
-    }
-</style>*@
-
-@*<script>
-    $('.word-list li').hover(function () {
-        $(this).toggleClass('highlight')
-    });
-</script>*@
-
 <div class="card">
     <h5 class="card-header">@Model.Name</h5>
     <div class="card-body">
@@ -27,7 +15,7 @@
             <ul class="list-group list-group-flush word-list">
                 @foreach (var word in Model.RevisionWords)
                 {
-                    <li class="list-group-item">
+                    <li class="list-group-item list-group-item-action">
                         @word.Word.Original - @word.Word.Translation
                         <a asp-controller="Collection" asp-action="DeleteRevisionWord"
                            asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"

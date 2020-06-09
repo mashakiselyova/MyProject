@@ -14,10 +14,10 @@
         </a>
 
         <div class="card">
-            <ul class="list-group list-group-flush word-list">
+            <ul class="list-group list-group-flush">
                 @foreach (var word in Model.Words)
                 {
-                    <li class="list-group-item">
+                    <li class="list-group-item list-group-item-action">
                         @word.Original - @word.Translation
                         <a asp-controller="Collection" asp-action="AddRevisionWord" asp-route-id="@word.Id"
                            asp-route-collectionId="@Model.CollectionId" class="btn btn-sm btn-info">
