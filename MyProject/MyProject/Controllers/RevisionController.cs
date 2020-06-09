@@ -11,10 +11,10 @@ namespace MyProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly CollectionService _collectionService;
-        private readonly ReviewService _reviewService;
+        private readonly RevisionService _reviewService;
 
         public RevisionController(UserManager<User> userManager, CollectionService collectionRepository, 
-            ReviewService reviewService)
+            RevisionService reviewService)
         {
             _userManager = userManager;
             _collectionService = collectionRepository;

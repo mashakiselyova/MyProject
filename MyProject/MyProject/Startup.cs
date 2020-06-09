@@ -41,7 +41,7 @@ namespace MyProject
             services.AddTransient<DictionaryService>();
             services.AddTransient<CollectionService>();
             services.AddTransient<WordService>();
-            services.AddTransient<ReviewService>();
+            services.AddTransient<RevisionService>();
             services.AddTransient<DictionaryOptionsService>();
 
             services.AddControllersWithViews();
