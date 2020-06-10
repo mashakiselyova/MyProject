@@ -9,7 +9,8 @@ namespace MyProject.DB
 {
     public class RevisionService
     {
-        private ApplicationContext _context;
+        private readonly ApplicationContext _context;
+        private const int NumberOfOptions = 3;
 
         public RevisionService(ApplicationContext context)
         {
@@ -29,29 +30,31 @@ namespace MyProject.DB
                 }).ToList();
             foreach(var word in words)
             {
-                word.Options = PopulateTranslationOptions(word.CorrectOption, collectionId);
+                word.Options = PopulateTranslationOptions(word.CorrectOption);
             }
             return words;
         }
 
-        private List<string> PopulateTranslationOptions(string correctOption, int collectionId)
+        private List<string> PopulateTranslationOptions(string correctOption)
         {
             var options = new List<string>();
             options.Add(correctOption);
-            var WordsInCollection = _context.RevisionWords.Where(r => r.CollectionId == collectionId).Count();
-            options.Add(ChooseOption(collectionId, WordsInCollection));
-            options.Add(ChooseOption(collectionId, WordsInCollection));
+            while (options.Count < 3)
+            {
+                var option = ChooseOption();
+                if (options.Contains(option))
+                    continue;
+                else
+                    options.Add(option);
+            }
             return options;
         }
 
-        private string ChooseOption(int collectionId, int wordsQuantity)
+        private string ChooseOption()
         {
+            var wordQuantity = _context.Words.Count();
             var random = new Random();
-            var option = _context.RevisionWords
-                .Where(r => r.CollectionId == collectionId)
-                .Select(r => r.Word.Translation)
-                .Skip(random.Next(wordsQuantity))
-                .Take(1);
+            var option = _context.Words.Select(w=>w.Translation).Skip(random.Next(wordQuantity)).Take(1);
             return option.First();
         }
     }
