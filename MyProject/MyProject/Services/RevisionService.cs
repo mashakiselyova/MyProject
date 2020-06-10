@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Models;
-using MyProject.Services;
 
 namespace MyProject.DB
 {
@@ -39,14 +38,15 @@ namespace MyProject.DB
         {
             var options = new List<string>();
             options.Add(correctOption);
-            while (options.Count < 3)
+            while (options.Count < NumberOfOptions)
             {
                 var option = ChooseOption();
                 if (options.Contains(option))
                     continue;
                 else
                     options.Add(option);
-            }
+            }            
+            options.Sort((x, y) => { return new Random().Next(-1,2); });
             return options;
         }
 
