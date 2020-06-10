@@ -3,13 +3,15 @@
 <div class="card">
     <h5 class="card-header">@Model.CollectionName</h5>
     <form asp-controller="Revision" asp-action="ReviewCollection" method="post">
+        <input type="hidden" asp-for="CollectionId" value="@Model.CollectionId" />
         @for (int i = 0; i < Model.PracticeWords.Count; i++)
         {
 
             <div class="card">
-                <input type="hidden" asp-for="PracticeWords[i].RevisionWordId" value="@Model.PracticeWords[i].RevisionWordId" />
+                <input type="hidden" asp-for="PracticeWords[i].RevisionWordId"
+                       value="@Model.PracticeWords[i].RevisionWordId" />
                 <input type="hidden" asp-for="PracticeWords[i].Word" value="@Model.PracticeWords[i].Word" />
-                <h6>@Model.PracticeWords[i].Word</h6>
+                <h4>@Model.PracticeWords[i].Word</h4>
                 <select asp-for="PracticeWords[i].SelectedOption" multiple class="form-control" style="overflow: hidden">
                     @foreach (var option in Model.PracticeWords[i].Options)
                     {

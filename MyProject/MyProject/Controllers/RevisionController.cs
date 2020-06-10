@@ -38,5 +38,11 @@ namespace MyProject.Controllers
             };
             return View(revision);
         }
+
+        [HttpPost]
+        public IActionResult ReviewCollection(RevisionViewModel model)
+        {
+            return RedirectToAction("Index"); 
+        }
     }
 }
