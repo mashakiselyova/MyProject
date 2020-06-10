@@ -83,7 +83,7 @@ namespace MyProject.Controllers
         {
             await _collectionService.AddRevisionWordAsync(id, collectionId);
             var collection = await _collectionService.GetCollectionAsync(collectionId);
-            return RedirectToAction("ShowWordsForAdding", new { dictionaryId = collection.Id, collectionId });
+            return RedirectToAction("ShowWordsForAdding", new { dictionaryId = collection.DictionaryId, collectionId });
         }
 
         [HttpGet]

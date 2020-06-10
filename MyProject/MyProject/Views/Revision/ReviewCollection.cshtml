@@ -1,10 +1,23 @@
-﻿@using System.Collections.Generic;
-@model List<Revision>
+﻿@model MyProject.ViewModels.RevisionViewModel
 
+<div class="card">
+    <h5 class="card-header">@Model.CollectionName</h5>
+    <form asp-controller="Revision" asp-action="ReviewCollection" method="post">
+        @for (int i = 0; i < Model.PracticeWords.Count; i++)
+        {
 
-<ul>
-    @foreach (var revision in Model)
-    {
-        <li>@revision.Word - @revision.CorrectOption</li>
-    }
-</ul>
+            <div class="card">
+                <input type="hidden" asp-for="PracticeWords[i].RevisionWordId" value="@Model.PracticeWords[i].RevisionWordId" />
+                <input type="hidden" asp-for="PracticeWords[i].Word" value="@Model.PracticeWords[i].Word" />
+                <h6>@Model.PracticeWords[i].Word</h6>
+                <select asp-for="PracticeWords[i].SelectedOption" multiple class="form-control" style="overflow: hidden">
+                    @foreach (var option in Model.PracticeWords[i].Options)
+                    {
+                        <option value="@option">@option</option>
+                    }
+                </select>
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Готово</button>
+    </form>
+</div>

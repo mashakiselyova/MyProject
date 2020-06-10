@@ -42,6 +42,11 @@ namespace MyProject.DB
             return collection;
         }
 
+        public string GetCollectionName(int id)
+        {
+            return _context.Collections.Find(id).Name;
+        }
+
         public async Task AddRevisionWordAsync(int wordId, int collectionId)
         {
             var word = await _context.Words.SingleOrDefaultAsync(w => w.Id == wordId);

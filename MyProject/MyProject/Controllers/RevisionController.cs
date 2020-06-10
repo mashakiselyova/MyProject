@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.DB;
 using MyProject.Models;
+using MyProject.ViewModels;
 
 namespace MyProject.Controllers
 {
@@ -26,9 +27,16 @@ namespace MyProject.Controllers
             return View(_collectionService.GetUserCollections(_userManager.GetUserId(HttpContext.User)));
         }
 
+        [HttpGet]
         public IActionResult ReviewCollection(int id)
         {
-            return View(_reviewService.GetWordsForRevision(id));
+            var revision = new RevisionViewModel
+            {
+                CollectionId = id,
+                CollectionName = _collectionService.GetCollectionName(id),
+                PracticeWords = _reviewService.GetWordsForRevision(id)
+            };
+            return View(revision);
         }
     }
 }
