@@ -1,0 +1,14 @@
+﻿@model MyProject.ViewModels.RevisionResultViewModel
+
+<h4>@Model.CollectionName</h4>
+<div>
+    <ul class="list-group list-group-flush word-list">
+        @foreach (var resultWord in Model.RevisionResultWords)
+        {
+            <li class="list-group-item list-group-item-action">
+                @resultWord.Word - @resultWord.CorrectOption - @resultWord.IsCorrect     
+                Next review in @resultWord.DaysUntilRevision days        
+            </li>
+        }
+    </ul>
+</div>

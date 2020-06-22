@@ -25,13 +25,45 @@ namespace MyProject.DB
                 {
                     RevisionWordId = r.Id,
                     Word = r.Word.Original,
-                    CorrectOption = r.Word.Translation
+                    CorrectOption = r.Word.Translation,
+                    DaysUntilRevision = r.DaysUntilReview
                 }).ToList();
             foreach(var word in words)
             {
                 word.Options = PopulateTranslationOptions(word.CorrectOption);
             }
             return words;
+        }
+
+        public List<RevisionResultWord> EvaluateRevision(List<PracticeWord> practiceWords)
+        {
+            foreach (var practiceWord in practiceWords)
+                practiceWord.CalculateDaysUntilNextRevision();
+
+            var revisionResultWords = new List<RevisionResultWord>();
+            foreach(var practiceWord in practiceWords)
+            {
+                revisionResultWords.Add(new RevisionResultWord
+                {
+                    RevisionWordId = practiceWord.RevisionWordId,
+                    Word = practiceWord.Word,
+                    CorrectOption = practiceWord.CorrectOption,
+                    IsCorrect = practiceWord.CorrectOption == practiceWord.SelectedOption,
+                    DaysUntilRevision = practiceWord.DaysUntilRevision
+                });
+            }
+            return revisionResultWords;
+        }
+
+        public void SaveRevisionResult(List<RevisionResultWord> resultWords)
+        {
+            foreach(var resultWord in resultWords)
+            {
+                var revisionWord = _context.RevisionWords.Find(resultWord.RevisionWordId);
+                revisionWord.DaysUntilReview = resultWord.DaysUntilRevision;
+                revisionWord.NextReview = DateTime.Now.AddDays(resultWord.DaysUntilRevision);
+                _context.SaveChanges();
+            }
         }
 
         private List<string> PopulateTranslationOptions(string correctOption)

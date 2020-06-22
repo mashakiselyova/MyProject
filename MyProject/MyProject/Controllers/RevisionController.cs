@@ -12,14 +12,14 @@ namespace MyProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly CollectionService _collectionService;
-        private readonly RevisionService _reviewService;
+        private readonly RevisionService _revisionService;
 
         public RevisionController(UserManager<User> userManager, CollectionService collectionRepository, 
             RevisionService reviewService)
         {
             _userManager = userManager;
             _collectionService = collectionRepository;
-            _reviewService = reviewService;
+            _revisionService = reviewService;
         }
 
         public IActionResult Index()
@@ -34,7 +34,7 @@ namespace MyProject.Controllers
             {
                 CollectionId = id,
                 CollectionName = _collectionService.GetCollectionName(id),
-                PracticeWords = _reviewService.GetWordsForRevision(id)
+                PracticeWords = _revisionService.GetWordsForRevision(id)
             };
             return View(revision);
         }
@@ -42,7 +42,17 @@ namespace MyProject.Controllers
         [HttpPost]
         public IActionResult ReviewCollection(RevisionViewModel model)
         {
-            return RedirectToAction("Index"); 
+            var resultWords = _revisionService.EvaluateRevision(model.PracticeWords);
+            _revisionService.SaveRevisionResult(resultWords);
+
+            var revisionResult = new RevisionResultViewModel
+            {
+                CollectionId = model.CollectionId,
+                CollectionName = model.CollectionName,
+                RevisionResultWords = resultWords
+            };
+
+            return View("RevisionResult", revisionResult); 
         }
     }
 }
