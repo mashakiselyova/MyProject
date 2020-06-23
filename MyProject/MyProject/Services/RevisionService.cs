@@ -10,6 +10,7 @@ namespace MyProject.DB
     {
         private readonly ApplicationContext _context;
         private const int NumberOfOptions = 3;
+        private const int WordsPerSession = 10;
 
         public RevisionService(ApplicationContext context)
         {
@@ -21,6 +22,8 @@ namespace MyProject.DB
             var words = _context.RevisionWords.Include(r => r.Word)
                 .Where(r => r.CollectionId == collectionId)
                 .Where(r => r.NextReview.Date <= DateTime.Today.Date)
+                .OrderBy(r => r.NextReview)
+                .Take(WordsPerSession)
                 .Select(r => new PracticeWord
                 {
                     RevisionWordId = r.Id,

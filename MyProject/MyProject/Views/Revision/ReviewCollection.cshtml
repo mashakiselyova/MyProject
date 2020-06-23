@@ -2,29 +2,37 @@
 
 <div class="card">
     <h5 class="card-header">@Model.CollectionName</h5>
-    <form asp-controller="Revision" asp-action="ReviewCollection" method="post">
-        <input type="hidden" asp-for="CollectionId" value="@Model.CollectionId" />
-        <input type="hidden" asp-for="CollectionName" value="@Model.CollectionName" />
-        @for (int i = 0; i < Model.PracticeWords.Count; i++)
-        {
+    @if (Model.PracticeWords.Count > 0)
+    {
+        <form asp-controller="Revision" asp-action="ReviewCollection" method="post">
+            <input type="hidden" asp-for="CollectionId" value="@Model.CollectionId" />
+            <input type="hidden" asp-for="CollectionName" value="@Model.CollectionName" />
+            @for (int i = 0; i < Model.PracticeWords.Count; i++)
+            {
 
-            <div class="card">
-                <input type="hidden" asp-for="PracticeWords[i].RevisionWordId"
-                       value="@Model.PracticeWords[i].RevisionWordId" />
-                <input type="hidden" asp-for="PracticeWords[i].DaysUntilRevision" 
-                       value="@Model.PracticeWords[i].DaysUntilRevision" />
-                <input type="hidden" asp-for="PracticeWords[i].CorrectOption" 
-                       value="@Model.PracticeWords[i].CorrectOption" />
-                <input type="hidden" asp-for="PracticeWords[i].Word" value="@Model.PracticeWords[i].Word" />
-                <h4>@Model.PracticeWords[i].Word</h4>
-                <select asp-for="PracticeWords[i].SelectedOption" multiple class="form-control" style="overflow: hidden">
-                    @foreach (var option in Model.PracticeWords[i].Options)
-                    {
-                        <option value="@option">@option</option>
-                    }
-                </select>
-            </div>
-        }
-        <button type="submit" class="btn btn-primary">Готово</button>
-    </form>
+                <div class="card">
+                    <input type="hidden" asp-for="PracticeWords[i].RevisionWordId"
+                           value="@Model.PracticeWords[i].RevisionWordId" />
+                    <input type="hidden" asp-for="PracticeWords[i].DaysUntilRevision"
+                           value="@Model.PracticeWords[i].DaysUntilRevision" />
+                    <input type="hidden" asp-for="PracticeWords[i].CorrectOption"
+                           value="@Model.PracticeWords[i].CorrectOption" />
+                    <input type="hidden" asp-for="PracticeWords[i].Word" value="@Model.PracticeWords[i].Word" />
+                    <h4>@Model.PracticeWords[i].Word</h4>
+                    <select asp-for="PracticeWords[i].SelectedOption" multiple class="form-control" 
+                            style="overflow: hidden">
+                        @foreach (var option in Model.PracticeWords[i].Options)
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    </select>
+                </div>
+            }
+            <button type="submit" class="btn btn-primary">Готово</button>
+        </form>
+    }
+    else
+    {
+        <div>Нет слов для повторения</div>
+    }
 </div>
