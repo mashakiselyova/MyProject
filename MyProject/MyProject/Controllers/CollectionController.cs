@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.DB;
 using MyProject.Models;
+using MyProject.Services;
 using MyProject.ViewModels;
 
 namespace MyProject.Controllers
@@ -91,6 +92,31 @@ namespace MyProject.Controllers
         {
             _collectionService.DeleteRevisionWord(wordId);
             return RedirectToAction("ShowCollection", new { id = collectionId });
+        }
+
+        public async Task<IActionResult> CreateWordForRevisionAsync(int collectionId)
+        {
+            return View(new CreateWordForRevisionViewModel
+            {
+                CollectionId = collectionId,
+                DictionaryId = await _collectionService.GetDictionaryIdByCollectionIdAsync(collectionId)
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateWordForRevisionAsync([FromServices] WordService wordService, 
+            CreateWordForRevisionViewModel model)
+        {
+            var word = new Word
+            {
+                DictionaryId = model.DictionaryId,
+                Original = model.Original,
+                Translation = model.Translation
+            };
+            await wordService.CreateWordAsync(word);
+            int wordId = await wordService.GetWordIdAsync(word.Original, word.Translation);
+            await _collectionService.AddRevisionWordAsync(wordId, model.CollectionId);
+            return RedirectToAction("ShowCollection", new { id = model.CollectionId });
         }
 
         private string GetCurrentUserId()

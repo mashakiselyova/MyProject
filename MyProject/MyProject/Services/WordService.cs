@@ -38,5 +38,13 @@ namespace MyProject.Services
             _context.Words.Remove(word);
             _context.SaveChanges();
         }
+
+        public async Task<int> GetWordIdAsync(string original, string translation)
+        {
+            var word = await _context.Words.Where(w => w.Original == original)
+                .Where(w => w.Translation == translation)
+                .SingleOrDefaultAsync();
+            return word.Id;
+        }
     }
 }

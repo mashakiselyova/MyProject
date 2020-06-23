@@ -67,5 +67,11 @@ namespace MyProject.DB
             _context.RevisionWords.Remove(revisionWord);
             _context.SaveChanges();
         }
+
+        public async Task<int> GetDictionaryIdByCollectionIdAsync(int collectionId)
+        {
+            var collection = await _context.Collections.FindAsync(collectionId);
+            return collection.DictionaryId;
+        }
     }
 }
