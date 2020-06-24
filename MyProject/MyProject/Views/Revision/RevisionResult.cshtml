@@ -6,9 +6,12 @@
         @foreach (var resultWord in Model.RevisionResultWords)
         {
             <li class="list-group-item list-group-item-action">
-                @resultWord.Word - @resultWord.CorrectOption - @resultWord.IsCorrect     
-                Next review in @resultWord.DaysUntilRevision days        
+                @resultWord.Word - @resultWord.CorrectOption - @resultWord.IsCorrect
+                Next review in @resultWord.DaysUntilRevision days
             </li>
         }
     </ul>
+    <a class="btn btn-info" asp-controller="Revision" asp-action="ReviewCollection" asp-route-id="@Model.CollectionId">
+        Следующая тренировка
+    </a>
 </div>
