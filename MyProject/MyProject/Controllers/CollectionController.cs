@@ -82,8 +82,8 @@ namespace MyProject.Controllers
         public async Task<IActionResult> AddRevisionWordAsync(int id, int collectionId)
         {
             await _collectionService.AddRevisionWordAsync(id, collectionId);
-            var collection = await _collectionService.GetCollectionAsync(collectionId);
-            return RedirectToAction("ShowWordsForAdding", new { dictionaryId = collection.DictionaryId, collectionId });
+            var dictionaryId = await _collectionService.GetDictionaryIdByCollectionIdAsync(collectionId);
+            return RedirectToAction("ShowWordsForAdding", new { dictionaryId, collectionId });
         }
 
         [HttpGet]
