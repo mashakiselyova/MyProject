@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MyProject.DB;
 using MyProject.Models;
 
-namespace MyProject.DB
+namespace MyProject.Services
 {
     public class RevisionService
     {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyProject.DB;
 using MyProject.Models;
 using MyProject.Services;
 using System.Threading.Tasks;

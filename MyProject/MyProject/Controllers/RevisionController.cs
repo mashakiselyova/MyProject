@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyProject.DB;
 using MyProject.Models;
+using MyProject.Services;
 using MyProject.ViewModels;
 
 namespace MyProject.Controllers
