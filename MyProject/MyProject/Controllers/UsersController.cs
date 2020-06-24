@@ -51,12 +51,12 @@ namespace MyProject.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName };
+            UserViewModel model = new UserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> Edit(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
