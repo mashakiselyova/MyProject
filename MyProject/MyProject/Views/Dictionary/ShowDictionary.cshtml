@@ -14,33 +14,50 @@
             Добавить слово
         </a>
 
-        <div class="card">
-            <ul class="list-group list-group-flush word-list">
-                @foreach (var word in Model.Words)
-                {
-                    <li class="list-group-item  list-group-item-action">
-                        @word.Original - @word.Translation
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
                         @if (User.IsInRole("admin"))
                         {
-                            <a asp-controller="Dictionary" asp-action="EditWord"
-                               asp-route-wordId="@word.Id" class="btn btn-sm btn-warning">
-                                Редактировать
-                            </a>
-                            <a asp-controller="Dictionary" asp-action="DeleteWord"
-                               asp-route-wordId="@word.Id" class="btn btn-sm btn-danger">
-                                Удалить
-                            </a>
+                            <th scope="col" style="width: 30%">First</th>
+                            <th scope="col" style="width: 50%">Last</th>
+                            <th scope="col" style="width: 10%">Last</th>
+                            <th scope="col" style="width: 10%">Last</th>
                         }
-                        @if (Model.Collections != null)
+                        else
                         {
-                            <a asp-controller="Collection" asp-action="AddWord" asp-route-id="@word.Id"
-                               asp-route-collectionId="@Model.Collections[0].Id" class="btn btn-sm btn-info">
-                                Добавить
-                            </a>
+
+                            <th scope="col" style="width: 30%">First</th>
+                            <th scope="col" style="width: 70%">Last</th>
                         }
-                    </li>
-                }
-            </ul>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var word in Model.Words)
+                    {
+                        <tr>
+                            <td>@word.Original</td>
+                            <td>@word.Translation</td>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <td>
+                                    <a asp-controller="Dictionary" asp-action="EditWord"
+                                       asp-route-wordId="@word.Id" class="btn btn-sm btn-warning">
+                                        Редактировать
+                                    </a>
+                                </td>
+                                <td>
+                                    <a asp-controller="Dictionary" asp-action="DeleteWord"
+                                       asp-route-wordId="@word.Id" class="btn btn-sm btn-danger">
+                                        Удалить
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

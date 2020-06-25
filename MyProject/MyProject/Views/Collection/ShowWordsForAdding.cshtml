@@ -13,19 +13,31 @@
             Вернуться к коллекции
         </a>
 
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                @foreach (var word in Model.Words)
-                {
-                    <li class="list-group-item list-group-item-action">
-                        @word.Original - @word.Translation
-                        <a asp-controller="Collection" asp-action="AddRevisionWord" asp-route-id="@word.Id"
-                           asp-route-collectionId="@Model.CollectionId" class="btn btn-sm btn-info">
-                            Добавить
-                        </a>
-                    </li>
-                }
-            </ul>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 30%">Оригинал</th>
+                        <th scope="col" style="width: 60%">Перевод</th>
+                        <th scope="col" style="width: 10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var word in Model.Words)
+                    {
+                        <tr>
+                            <td>@word.Original</td>
+                            <td>@word.Translation</td>
+                            <td>
+                                <a asp-controller="Collection" asp-action="AddRevisionWord" asp-route-id="@word.Id"
+                                   asp-route-collectionId="@Model.CollectionId" class="btn btn-sm btn-info">
+                                    Добавить
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
