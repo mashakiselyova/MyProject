@@ -20,6 +20,7 @@ namespace MyProject.Services
 
         public List<PracticeWord> GetWordsForRevision(int collectionId)
         {
+            var dictionaryId = _context.Collections.Find(collectionId).DictionaryId;
             var words = _context.RevisionWords.Include(r => r.Word)
                 .Where(r => r.CollectionId == collectionId)
                 .Where(r => r.NextReview.Date <= DateTime.Today.Date)
@@ -32,9 +33,9 @@ namespace MyProject.Services
                     CorrectOption = r.Word.Translation,
                     DaysUntilRevision = r.DaysUntilReview
                 }).ToList();
-            foreach(var word in words)
+            foreach (var word in words)
             {
-                word.Options = PopulateTranslationOptions(word.CorrectOption);
+                word.Options = PopulateTranslationOptions(word.CorrectOption, dictionaryId);
             }
             return words;
         }
@@ -45,7 +46,7 @@ namespace MyProject.Services
                 practiceWord.CalculateDaysUntilNextRevision();
 
             var revisionResultWords = new List<RevisionResultWord>();
-            foreach(var practiceWord in practiceWords)
+            foreach (var practiceWord in practiceWords)
             {
                 revisionResultWords.Add(new RevisionResultWord
                 {
@@ -61,7 +62,7 @@ namespace MyProject.Services
 
         public void SaveRevisionResult(List<RevisionResultWord> resultWords)
         {
-            foreach(var resultWord in resultWords)
+            foreach (var resultWord in resultWords)
             {
                 var revisionWord = _context.RevisionWords.Find(resultWord.RevisionWordId);
                 revisionWord.DaysUntilReview = resultWord.DaysUntilRevision;
@@ -70,27 +71,30 @@ namespace MyProject.Services
             }
         }
 
-        private List<string> PopulateTranslationOptions(string correctOption)
+        private List<string> PopulateTranslationOptions(string correctOption, int dictionaryId)
         {
             var options = new List<string>();
             options.Add(correctOption);
             while (options.Count < NumberOfOptions)
             {
-                var option = ChooseOption();
+                var option = ChooseOption(dictionaryId);
                 if (options.Contains(option))
                     continue;
                 else
                     options.Add(option);
-            }            
-            options.Sort((x, y) => { return new Random().Next(-1,2); });
+            }
+            options.Sort((x, y) => { return new Random().Next(-1, 2); });
             return options;
         }
 
-        private string ChooseOption()
+        private string ChooseOption(int dictionaryId)
         {
-            var wordQuantity = _context.Words.Count();
+            var wordQuantity = _context.Words.Where(w => w.DictionaryId == dictionaryId).Count();
             var random = new Random();
-            var option = _context.Words.Select(w=>w.Translation).Skip(random.Next(wordQuantity)).Take(1);
+            var option = _context.Words.Where(w => w.DictionaryId == dictionaryId)
+                .Select(w => w.Translation)
+                .Skip(random.Next(wordQuantity))
+                .Take(1);
             return option.First();
         }
     }
