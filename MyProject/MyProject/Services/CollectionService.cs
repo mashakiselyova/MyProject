@@ -74,5 +74,13 @@ namespace MyProject.Services
             var collection = await _context.Collections.FindAsync(collectionId);
             return collection.DictionaryId;
         }
+
+        public async Task ResetProgressAsync(int wordId)
+        {
+            var word = await _context.RevisionWords.FindAsync(wordId);
+            word.DaysUntilReview = 1;
+            word.NextReview = DateTime.Today + new TimeSpan(1, 0, 0, 0);
+            await _context.SaveChangesAsync();
+        }
     }
 }

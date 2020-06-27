@@ -118,6 +118,12 @@ namespace MyProject.Controllers
             return RedirectToAction("ShowCollection", new { id = model.CollectionId });
         }
 
+        public async Task<IActionResult> ResetProgressAsync(int wordId, int collectionId)
+        {
+            await _collectionService.ResetProgressAsync(wordId);
+            return RedirectToAction("ShowCollection", new { id = collectionId });
+        }
+
         private string GetCurrentUserId()
         {
             return _userManager.GetUserId(HttpContext.User);

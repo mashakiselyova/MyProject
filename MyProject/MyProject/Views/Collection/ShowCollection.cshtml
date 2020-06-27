@@ -16,7 +16,8 @@
                 <thead>
                     <tr>
                         <th scope="col" style="width: 30%">Оригинал</th>
-                        <th scope="col" style="width: 50%">Перевод</th>
+                        <th scope="col" style="width: 40%">Перевод</th>
+                        <th scope="col" style="width: 10%"></th>
                         <th scope="col" style="width: 10%"></th>
                         <th scope="col" style="width: 10%"></th>
                     </tr>
@@ -25,11 +26,20 @@
                     @foreach (var word in Model.RevisionWords)
                     {
                         var daysUntilRevision = (word.NextReview.Date - DateTime.Today.Date).Days;
+                        if (daysUntilRevision < 0)
+                            daysUntilRevision = 0;
 
                         <tr>
                             <td>@word.Word.Original</td>
                             <td>@word.Word.Translation</td>
                             <td>@daysUntilRevision</td>
+                            <td>
+                                <a asp-controller="Collection" asp-action="ResetProgress"
+                                   asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"
+                                   class="btn btn-sm btn-warning">
+                                    Сбросить
+                                </a>
+                            </td>
                             <td>
                                 <a asp-controller="Collection" asp-action="DeleteRevisionWord"
                                    asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"
