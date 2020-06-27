@@ -37,6 +37,7 @@ namespace MyProject.Services
             {
                 word.Options = PopulateTranslationOptions(word.CorrectOption, dictionaryId);
             }
+            words.Sort((x, y) => { return new Random().Next(-1, 2); });
             return words;
         }
 
