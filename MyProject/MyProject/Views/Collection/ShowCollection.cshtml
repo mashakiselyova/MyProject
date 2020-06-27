@@ -24,10 +24,12 @@
                 <tbody>
                     @foreach (var word in Model.RevisionWords)
                     {
+                        var daysUntilRevision = (word.NextReview.Date - DateTime.Today.Date).Days;
+
                         <tr>
                             <td>@word.Word.Original</td>
                             <td>@word.Word.Translation</td>
-                            <td>@(word.NextReview.Day - DateTime.Today.Day)</td>
+                            <td>@daysUntilRevision</td>
                             <td>
                                 <a asp-controller="Collection" asp-action="DeleteRevisionWord"
                                    asp-route-wordId="@word.Id" asp-route-collectionId="@Model.Id"
