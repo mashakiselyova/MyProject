@@ -2,15 +2,36 @@
 
 <h4>@Model.CollectionName</h4>
 <div>
-    <ul class="list-group list-group-flush word-list">
-        @foreach (var resultWord in Model.RevisionResultWords)
-        {
-            <li class="list-group-item list-group-item-action">
-                @resultWord.Word - @resultWord.CorrectOption - @resultWord.IsCorrect
-                Next review in @resultWord.DaysUntilRevision days
-            </li>
-        }
-    </ul>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+
+                <th scope="col" style="width: 30%">Оригинал</th>
+                <th scope="col" style="width: 50%">Перевод</th>
+                <th scope="col" style="width: 10%"></th>
+                <th scope="col" style="width: 10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var resultWord in Model.RevisionResultWords)
+            {
+                <tr>
+                    <td>@resultWord.Word</td>
+                    <td>@resultWord.CorrectOption</td>
+                    @if (resultWord.IsCorrect)
+                    {
+                        <td>Верно</td>
+                    }
+                    else
+                    {
+                        <td>Неверно</td>
+                    }
+                    <td>@resultWord.DaysUntilRevision</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
     <a class="btn btn-info" asp-controller="Revision" asp-action="ReviewCollection" asp-route-id="@Model.CollectionId">
         Следующая тренировка
     </a>
